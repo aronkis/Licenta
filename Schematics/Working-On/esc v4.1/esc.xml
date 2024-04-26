@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\KAron\OneDrive - Analog Devices, Inc\Desktop\D\ESC\esc v3.1\esc.kicad_sch</source>
+    <date>11/29/2023 11:36:12 AM</date>
+    <tool>Eeschema 7.0.6</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>esc.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>motor.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>driver.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>1u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>346a3085-321e-41c0-91dd-42ae3e1f4cc6</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e83b0137-8180-4d8b-94c2-814f1d0d7a61</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1413d2a9-c158-49bd-9e34-c2a144352ff1</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>PWM_INPUT</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6fcbb05b-fb2f-44ec-9627-fdabdc225f3d</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>COIL_A</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_5x10mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c140ecb5-e9c2-4f3b-9d00-3de74551f901</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>12V</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_5x10mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6f9234b2-5c95-4845-bca7-6eaf8a05ab12</tstamps>
+    </comp>
+    <comp ref="J4">
+      <value>COIL_B</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_5x10mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cc4c0bc1-e72a-4e91-a883-d7caf72759c9</tstamps>
+    </comp>
+    <comp ref="J5">
+      <value>GND</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_5x10mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1ebbc159-9962-441a-9d03-ef10d9c9edc9</tstamps>
+    </comp>
+    <comp ref="J6">
+      <value>COIL_C</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_5x10mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>64a9161e-debb-4e72-aaf1-698c53a12004</tstamps>
+    </comp>
+    <comp ref="J7">
+      <value>5V</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ca555b76-b0cd-49ac-b341-057027d639af</tstamps>
+    </comp>
+    <comp ref="J8">
+      <value>GND</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_1" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>74b4c26f-c9ba-4bbe-bba7-47601b476afb</tstamps>
+    </comp>
+    <comp ref="J9">
+      <value>RX</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>35d11f68-e55b-4b07-99a5-f0615c12f066</tstamps>
+    </comp>
+    <comp ref="J10">
+      <value>TX</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9bf4c179-54d8-4e57-82a3-ace6d6f16385</tstamps>
+    </comp>
+    <comp ref="J11">
+      <value>DTR</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5b0ca4ba-e1ae-424c-a271-b4186d4306bd</tstamps>
+    </comp>
+    <comp ref="J12">
+      <value>MISO</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>99c468a3-5cc6-4b47-aeea-9f5abd548163</tstamps>
+    </comp>
+    <comp ref="J13">
+      <value>MOSI</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00b75123-75d5-404f-b4d0-f7e256f6e3ac</tstamps>
+    </comp>
+    <comp ref="J14">
+      <value>SCK</value>
+      <footprint>Connector_Wire:SolderWirePad_1x01_SMD_1x2mm</footprint>
+      <libsource lib="" part="Conn_01x01_2" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>30ea8dcd-92ba-4361-b306-44f37fa637e7</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>TLV76750DRVx</value>
+      <footprint>Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm_ThermalVias</footprint>
+      <datasheet>www.ti.com/lit/gpn/TLV767</datasheet>
+      <libsource lib="Regulator_Linear" part="TLV76750DRVx" description="1A, 16V Precision Linear Voltage Regulator, with enable pin, Fixed Output 5.0V, WSON-6"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="esc.kicad_sch"/>
+      <property name="ki_description" value="1A, 16V Precision Linear Voltage Regulator, with enable pin, Fixed Output 5.0V, WSON-6"/>
+      <property name="ki_keywords" value="1A, 16V Precision Linear Voltage Regulator"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f8b8a32c-0b05-40b9-8ae1-302916c6c27f</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>3802c1c6-5e99-493f-a3f7-7d0607e95502</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>60aa60d1-d5a0-4236-a800-a2f3f2531bc1</tstamps>
+    </comp>
+    <comp ref="C6">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>4196f977-7879-4387-a7bc-35fee05286c9</tstamps>
+    </comp>
+    <comp ref="C7">
+      <value>1n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>b93bf3de-44c9-4239-83b9-624df18152e1</tstamps>
+    </comp>
+    <comp ref="C8">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>efd6474f-bd5f-47cb-bdb9-b8ebf769dff8</tstamps>
+    </comp>
+    <comp ref="C9">
+      <value>22p</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>65874ebc-e7df-4c4b-a416-e80a59dfdd3d</tstamps>
+    </comp>
+    <comp ref="C10">
+      <value>22p</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>c4ce4c67-0ba6-41ca-a314-602e9599aae1</tstamps>
+    </comp>
+    <comp ref="C11">
+      <value>1n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>fb52e474-2bd9-4b32-8f2a-90b0fb01e276</tstamps>
+    </comp>
+    <comp ref="C12">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>02ae6ed9-de9c-4bee-ba17-3ecbde87f421</tstamps>
+    </comp>
+    <comp ref="C13">
+      <value>1n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>293f686a-938c-4753-b712-7e61a66ac07e</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>beeb0e20-253b-4212-ae78-9b9ec0da7552</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>33k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>a3b464a1-68e9-4623-b218-9918f1d50ab2</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>5c6c9414-c222-4821-83e4-d9b53b5c5550</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>33k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>58479b1e-3d8f-4460-b89d-1106470a9d78</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>a5e2bc6d-bf29-41c8-982e-41d6694dbe6c</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>ebf0a060-5479-427d-b1ea-a2a6277e34c5</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>bb901f4b-a166-4d2e-a3c8-edca04b02921</tstamps>
+    </comp>
+    <comp ref="R8">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>6a4d2761-fa17-460f-b304-dc3bd3039c5c</tstamps>
+    </comp>
+    <comp ref="R9">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>d0a544a3-6333-4572-9bf6-d308217dbba1</tstamps>
+    </comp>
+    <comp ref="R10">
+      <value>33k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>f2ea9e5f-eea0-402f-86d1-42437d973d70</tstamps>
+    </comp>
+    <comp ref="R11">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>d2e750e1-9dee-4489-ab74-40ef97073bb1</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>ATmega328P-M</value>
+      <footprint>Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.1x3.1mm</footprint>
+      <datasheet>http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20with%20picoPower%20Technology%20Data%20Sheet%2040001984A.pdf</datasheet>
+      <libsource lib="MCU_Microchip_ATmega" part="ATmega328P-M" description="20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, QFN-32"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, QFN-32"/>
+      <property name="ki_keywords" value="AVR 8bit Microcontroller MegaAVR PicoPower"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>8c980d43-743a-401f-b93b-7e9f1cd6ce48</tstamps>
+    </comp>
+    <comp ref="Y1">
+      <value>16MHz</value>
+      <footprint>Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm</footprint>
+      <libsource lib="Device" part="Crystal_GND24" description="Four pin crystal, GND on pins 2 and 4"/>
+      <property name="Sheetname" value="Motor"/>
+      <property name="Sheetfile" value="motor.kicad_sch"/>
+      <property name="ki_description" value="Four pin crystal, GND on pins 2 and 4"/>
+      <property name="ki_keywords" value="quartz ceramic resonator oscillator"/>
+      <sheetpath names="/Motor/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/"/>
+      <tstamps>b3ab4357-fc9f-4c05-a6ba-446bf913bc51</tstamps>
+    </comp>
+    <comp ref="C14">
+      <value>0.1u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>4d4b0fb6-df36-4e87-8a1f-0a25e6093d65</tstamps>
+    </comp>
+    <comp ref="C15">
+      <value>1u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>9f6d74b7-33c2-4673-b0b7-70e44a942bf8</tstamps>
+    </comp>
+    <comp ref="C16">
+      <value>0.1u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>64400faf-2fa5-470f-a8c7-708e8b51a87a</tstamps>
+    </comp>
+    <comp ref="C17">
+      <value>0.1u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>f2ca4243-e7b4-4e23-9296-a26723f76fce</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>BSZ0902NS</value>
+      <footprint>BSZ0902NS:BSZ0902NS</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="MF">Infineon</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="PARTREV">2.4</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="BSZ0902NS" part="BSZ0902NS" description=""/>
+      <property name="MF" value="Infineon"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.1 mm"/>
+      <property name="Package" value="Package"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="2.4"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap"/>
+      <property name="MP" value="BSZ0902NS"/>
+      <property name="Description" value="&#xA;N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL&#xA;"/>
+      <property name="MANUFACTURER" value="Infineon"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="SNAPEDA_PN" value="BSZ0902NS"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>7f140295-8a65-4f96-b8e9-b857f4a2e601</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>BSZ0902NS</value>
+      <footprint>BSZ0902NS:BSZ0902NS</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="MF">Infineon</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="PARTREV">2.4</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="BSZ0902NS" part="BSZ0902NS" description=""/>
+      <property name="MF" value="Infineon"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.1 mm"/>
+      <property name="Package" value="Package"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="2.4"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap"/>
+      <property name="MP" value="BSZ0902NS"/>
+      <property name="Description" value="&#xA;N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL&#xA;"/>
+      <property name="MANUFACTURER" value="Infineon"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="SNAPEDA_PN" value="BSZ0902NS"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>f79e0811-50d6-4e5e-ba69-251b471b0906</tstamps>
+    </comp>
+    <comp ref="Q3">
+      <value>BSZ0902NS</value>
+      <footprint>BSZ0902NS:BSZ0902NS</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="MF">Infineon</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="PARTREV">2.4</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="BSZ0902NS" part="BSZ0902NS" description=""/>
+      <property name="MF" value="Infineon"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.1 mm"/>
+      <property name="Package" value="Package"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="2.4"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap"/>
+      <property name="MP" value="BSZ0902NS"/>
+      <property name="Description" value="&#xA;N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL&#xA;"/>
+      <property name="MANUFACTURER" value="Infineon"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="SNAPEDA_PN" value="BSZ0902NS"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>ca77ed53-2fcc-4e83-a40a-7d54e98c9446</tstamps>
+    </comp>
+    <comp ref="Q4">
+      <value>BSZ0902NS</value>
+      <footprint>BSZ0902NS:BSZ0902NS</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="MF">Infineon</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="PARTREV">2.4</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="BSZ0902NS" part="BSZ0902NS" description=""/>
+      <property name="MF" value="Infineon"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.1 mm"/>
+      <property name="Package" value="Package"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="2.4"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap"/>
+      <property name="MP" value="BSZ0902NS"/>
+      <property name="Description" value="&#xA;N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL&#xA;"/>
+      <property name="MANUFACTURER" value="Infineon"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="SNAPEDA_PN" value="BSZ0902NS"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>3c13c4f2-509c-4998-ad0d-9f59cceedb16</tstamps>
+    </comp>
+    <comp ref="Q5">
+      <value>BSZ0902NS</value>
+      <footprint>BSZ0902NS:BSZ0902NS</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="MF">Infineon</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="PARTREV">2.4</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="BSZ0902NS" part="BSZ0902NS" description=""/>
+      <property name="MF" value="Infineon"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.1 mm"/>
+      <property name="Package" value="Package"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="2.4"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap"/>
+      <property name="MP" value="BSZ0902NS"/>
+      <property name="Description" value="&#xA;N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL&#xA;"/>
+      <property name="MANUFACTURER" value="Infineon"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="SNAPEDA_PN" value="BSZ0902NS"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>e21f0a54-3e2e-4bfd-a5cc-af236670048e</tstamps>
+    </comp>
+    <comp ref="Q6">
+      <value>BSZ0902NS</value>
+      <footprint>BSZ0902NS:BSZ0902NS</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="MF">Infineon</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="PARTREV">2.4</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="BSZ0902NS" part="BSZ0902NS" description=""/>
+      <property name="MF" value="Infineon"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.1 mm"/>
+      <property name="Package" value="Package"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="2.4"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap"/>
+      <property name="MP" value="BSZ0902NS"/>
+      <property name="Description" value="&#xA;N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL&#xA;"/>
+      <property name="MANUFACTURER" value="Infineon"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="SNAPEDA_PN" value="BSZ0902NS"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>5097df0c-9123-4b2d-8783-703f0903ce0f</tstamps>
+    </comp>
+    <comp ref="R12">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>f25657de-3db1-43db-91d5-aee0b0696236</tstamps>
+    </comp>
+    <comp ref="R13">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>f9caeecc-c7c9-472e-960b-c66ca0f0753d</tstamps>
+    </comp>
+    <comp ref="R14">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>9f136c49-dcff-4999-ad26-4a8d74ae307b</tstamps>
+    </comp>
+    <comp ref="R15">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>f6db955f-c9d0-4649-9f70-50444abcff76</tstamps>
+    </comp>
+    <comp ref="R16">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>b3c644b2-e841-41f4-8ae4-9571173afe79</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>cecd5832-1fee-421a-be50-7cd5b45ab03d</tstamps>
+    </comp>
+    <comp ref="U3">
+      <value>DRV8300DRGER</value>
+      <footprint>DRV8300DRGER:RGE0024B-IPC_C</footprint>
+      <datasheet>DRV8300DRGER</datasheet>
+      <libsource lib="DRV8300DRGER" part="DRV8300DRGER" description=""/>
+      <property name="Sheetname" value="Driver"/>
+      <property name="Sheetfile" value="driver.kicad_sch"/>
+      <property name="ki_keywords" value="DRV8300DRGER"/>
+      <sheetpath names="/Motor/Driver/" tstamps="/8cef8815-0ecf-485b-bf17-38d5d86b0012/fb73cb2e-1489-4d2e-bc35-735d17c19607/"/>
+      <tstamps>77d8aa8f-9328-48f6-b60c-e9b7236784e0</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="" part="Conn_01x01_1">
+      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J16</field>
+        <field name="Value">Conn_01x01</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="Conn_01x01_2">
+      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J15</field>
+        <field name="Value">Conn_01x01</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="BSZ0902NS" part="BSZ0902NS">
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BSZ0902NS</field>
+        <field name="Footprint">BSZ0902NS:TRANS_BSZ0902NS</field>
+        <field name="MF">Infineon</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.1 mm</field>
+        <field name="Package">Package</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=eda</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="PARTREV">2.4</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/BSZ0902NS/Infineon/view-part/?ref=snap</field>
+        <field name="MP">BSZ0902NS</field>
+        <field name="Description">
+N-Channel 30V 19A (Ta), 40A (Tc) 2.1W (Ta), 48W (Tc) Surface Mount PG-TSDSON-8-FL
+</field>
+        <field name="MANUFACTURER">Infineon</field>
+        <field name="Availability">In Stock</field>
+        <field name="SNAPEDA_PN">BSZ0902NS</field>
+      </fields>
+      <pins>
+        <pin num="1_2_3" name="" type="passive"/>
+        <pin num="4" name="" type="passive"/>
+        <pin num="5_6_7_8" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x01">
+      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x01</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="DRV8300DRGER" part="DRV8300DRGER">
+      <docs>DRV8300DRGER</docs>
+      <footprints>
+        <fp>RGE0024B-IPC_A</fp>
+        <fp>RGE0024B-IPC_B</fp>
+        <fp>RGE0024B-IPC_C</fp>
+        <fp>RGE0024B-MFG</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">DRV8300DRGER</field>
+        <field name="Footprint">RGE0024B-IPC_A</field>
+        <field name="Datasheet">DRV8300DRGER</field>
+      </fields>
+      <pins>
+        <pin num="1" name="INLA" type="input"/>
+        <pin num="2" name="INLB" type="input"/>
+        <pin num="3" name="INLC" type="input"/>
+        <pin num="4" name="GVDD" type="power_in"/>
+        <pin num="5" name="MODE" type="input"/>
+        <pin num="6" name="GND" type="power_in"/>
+        <pin num="7" name="NC" type="unspecified"/>
+        <pin num="8" name="NC" type="unspecified"/>
+        <pin num="9" name="GLC" type="output"/>
+        <pin num="10" name="GLB" type="output"/>
+        <pin num="11" name="GLA" type="output"/>
+        <pin num="12" name="SHC" type="input"/>
+        <pin num="13" name="GHC" type="output"/>
+        <pin num="14" name="BSTC" type="output"/>
+        <pin num="15" name="SHB" type="input"/>
+        <pin num="16" name="GHB" type="output"/>
+        <pin num="17" name="BSTB" type="output"/>
+        <pin num="18" name="SHA" type="input"/>
+        <pin num="19" name="GHA" type="output"/>
+        <pin num="20" name="BSTA" type="output"/>
+        <pin num="21" name="DT" type="input"/>
+        <pin num="22" name="INHA" type="input"/>
+        <pin num="23" name="INHB" type="input"/>
+        <pin num="24" name="INHC" type="input"/>
+        <pin num="25" name="PowerPAD" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Crystal_GND24">
+      <description>Four pin crystal, GND on pins 2 and 4</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Crystal*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Y</field>
+        <field name="Value">Crystal_GND24</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_Microchip_ATmega" part="ATmega328P-M">
+      <description>20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, QFN-32</description>
+      <docs>http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20with%20picoPower%20Technology%20Data%20Sheet%2040001984A.pdf</docs>
+      <footprints>
+        <fp>QFN*1EP*5x5mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ATmega328P-M</field>
+        <field name="Footprint">Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.1x3.1mm</field>
+        <field name="Datasheet">http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20with%20picoPower%20Technology%20Data%20Sheet%2040001984A.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="PD3" type="bidirectional"/>
+        <pin num="2" name="PD4" type="bidirectional"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="VCC" type="power_in"/>
+        <pin num="5" name="GND" type="passive"/>
+        <pin num="6" name="VCC" type="passive"/>
+        <pin num="7" name="XTAL1/PB6" type="bidirectional"/>
+        <pin num="8" name="XTAL2/PB7" type="bidirectional"/>
+        <pin num="9" name="PD5" type="bidirectional"/>
+        <pin num="10" name="PD6" type="bidirectional"/>
+        <pin num="11" name="PD7" type="bidirectional"/>
+        <pin num="12" name="PB0" type="bidirectional"/>
+        <pin num="13" name="PB1" type="bidirectional"/>
+        <pin num="14" name="PB2" type="bidirectional"/>
+        <pin num="15" name="PB3" type="bidirectional"/>
+        <pin num="16" name="PB4" type="bidirectional"/>
+        <pin num="17" name="PB5" type="bidirectional"/>
+        <pin num="18" name="AVCC" type="power_in"/>
+        <pin num="19" name="ADC6" type="input"/>
+        <pin num="20" name="AREF" type="passive"/>
+        <pin num="21" name="GND" type="passive"/>
+        <pin num="22" name="ADC7" type="input"/>
+        <pin num="23" name="PC0" type="bidirectional"/>
+        <pin num="24" name="PC1" type="bidirectional"/>
+        <pin num="25" name="PC2" type="bidirectional"/>
+        <pin num="26" name="PC3" type="bidirectional"/>
+        <pin num="27" name="PC4" type="bidirectional"/>
+        <pin num="28" name="PC5" type="bidirectional"/>
+        <pin num="29" name="~{RESET}/PC6" type="bidirectional"/>
+        <pin num="30" name="PD0" type="bidirectional"/>
+        <pin num="31" name="PD1" type="bidirectional"/>
+        <pin num="32" name="PD2" type="bidirectional"/>
+        <pin num="33" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Linear" part="TLV76750DRVx">
+      <description>1A, 16V Precision Linear Voltage Regulator, with enable pin, Fixed Output 5.0V, WSON-6</description>
+      <docs>www.ti.com/lit/gpn/TLV767</docs>
+      <footprints>
+        <fp>WSON*1EP*2x2mm*P0.65*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TLV76750DRVx</field>
+        <field name="Footprint">Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm_ThermalVias</field>
+        <field name="Datasheet">www.ti.com/lit/gpn/TLV767</field>
+      </fields>
+      <pins>
+        <pin num="1" name="OUT" type="power_out"/>
+        <pin num="2" name="SNS" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="EN" type="input"/>
+        <pin num="5" name="GND" type="passive"/>
+        <pin num="6" name="IN" type="power_in"/>
+        <pin num="7" name="PAD" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="BSZ0902NS">
+      <uri>C:\Users\KAron\OneDrive - Analog Devices, Inc\Desktop\D\ESC\esc v3.1/Components/BSZ0902NS/BSZ0902NS.kicad_sym</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="DRV8300DRGER">
+      <uri>C:\Users\KAron\OneDrive - Analog Devices, Inc\Desktop\D\ESC\esc v3.1/Components/DRV8300DRGER/DRV8300DRGER.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="MCU_Microchip_ATmega">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/MCU_Microchip_ATmega.kicad_sym</uri>
+    </library>
+    <library logical="Regulator_Linear">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Regulator_Linear.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5V">
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="J7" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="OUT" pintype="power_out"/>
+      <node ref="U1" pin="2" pinfunction="SNS" pintype="input"/>
+      <node ref="U2" pin="18" pinfunction="AVCC" pintype="power_in"/>
+      <node ref="U2" pin="4" pinfunction="VCC" pintype="power_in"/>
+      <node ref="U2" pin="6" pinfunction="VCC" pintype="passive"/>
+    </net>
+    <net code="2" name="+12V">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C15" pin="2" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="Q1" pin="5_6_7_8" pintype="passive"/>
+      <node ref="Q2" pin="5_6_7_8" pintype="passive"/>
+      <node ref="Q3" pin="5_6_7_8" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="EN" pintype="input"/>
+      <node ref="U1" pin="6" pinfunction="IN" pintype="power_in"/>
+      <node ref="U3" pin="4" pinfunction="GVDD" pintype="power_in"/>
+    </net>
+    <net code="3" name="AH">
+      <node ref="J14" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="U2" pin="15" pinfunction="PB3" pintype="bidirectional"/>
+      <node ref="U3" pin="22" pinfunction="INHA" pintype="input"/>
+    </net>
+    <net code="4" name="AL">
+      <node ref="U2" pin="2" pinfunction="PD4" pintype="bidirectional"/>
+      <node ref="U3" pin="1" pinfunction="INLA" pintype="input"/>
+    </net>
+    <net code="5" name="BH">
+      <node ref="U2" pin="14" pinfunction="PB2" pintype="bidirectional"/>
+      <node ref="U3" pin="23" pinfunction="INHB" pintype="input"/>
+    </net>
+    <net code="6" name="BL">
+      <node ref="U2" pin="1" pinfunction="PD3" pintype="bidirectional"/>
+      <node ref="U3" pin="2" pinfunction="INLB" pintype="input"/>
+    </net>
+    <net code="7" name="CH">
+      <node ref="U2" pin="13" pinfunction="PB1" pintype="bidirectional"/>
+      <node ref="U3" pin="24" pinfunction="INHC" pintype="input"/>
+    </net>
+    <net code="8" name="CL">
+      <node ref="U2" pin="32" pinfunction="PD2" pintype="bidirectional"/>
+      <node ref="U3" pin="3" pinfunction="INLC" pintype="input"/>
+    </net>
+    <net code="9" name="COIL_A">
+      <node ref="C14" pin="1" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="Q1" pin="1_2_3" pintype="passive"/>
+      <node ref="Q4" pin="5_6_7_8" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="U3" pin="18" pinfunction="SHA" pintype="input"/>
+    </net>
+    <net code="10" name="COIL_A_BEMF">
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="C13" pin="1" pintype="passive"/>
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="R10" pin="1" pintype="passive"/>
+      <node ref="R11" pin="2" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="U2" pin="10" pinfunction="PD6" pintype="bidirectional"/>
+      <node ref="U2" pin="23" pinfunction="PC0" pintype="bidirectional"/>
+      <node ref="U2" pin="24" pinfunction="PC1" pintype="bidirectional"/>
+      <node ref="U2" pin="25" pinfunction="PC2" pintype="bidirectional"/>
+    </net>
+    <net code="11" name="COIL_B">
+      <node ref="C16" pin="1" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="Q2" pin="1_2_3" pintype="passive"/>
+      <node ref="Q5" pin="5_6_7_8" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="U3" pin="15" pinfunction="SHB" pintype="input"/>
+    </net>
+    <net code="12" name="COIL_C">
+      <node ref="C17" pin="1" pintype="passive"/>
+      <node ref="J6" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="Q3" pin="1_2_3" pintype="passive"/>
+      <node ref="Q6" pin="5_6_7_8" pintype="passive"/>
+      <node ref="R10" pin="2" pintype="passive"/>
+      <node ref="U3" pin="12" pinfunction="SHC" pintype="input"/>
+    </net>
+    <net code="13" name="DTR">
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="J11" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+    </net>
+    <net code="14" name="GND">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="C13" pin="2" pintype="passive"/>
+      <node ref="C15" pin="1" pintype="passive"/>
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="C6" pin="1" pintype="passive"/>
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="C9" pin="1" pintype="passive"/>
+      <node ref="J5" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="J8" pin="1" pinfunction="Pin_1" pintype="power_in"/>
+      <node ref="Q4" pin="1_2_3" pintype="passive"/>
+      <node ref="Q5" pin="1_2_3" pintype="passive"/>
+      <node ref="Q6" pin="1_2_3" pintype="passive"/>
+      <node ref="R11" pin="1" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="GND" pintype="power_in"/>
+      <node ref="U1" pin="5" pinfunction="GND" pintype="passive"/>
+      <node ref="U1" pin="7" pinfunction="PAD" pintype="passive"/>
+      <node ref="U2" pin="21" pinfunction="GND" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="GND" pintype="power_in"/>
+      <node ref="U2" pin="33" pinfunction="GND" pintype="passive"/>
+      <node ref="U2" pin="5" pinfunction="GND" pintype="passive"/>
+      <node ref="U3" pin="25" pinfunction="PowerPAD" pintype="power_in"/>
+      <node ref="U3" pin="6" pinfunction="GND" pintype="power_in"/>
+      <node ref="Y1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="Y1" pin="4" pinfunction="4" pintype="passive"/>
+    </net>
+    <net code="15" name="MISO">
+      <node ref="J12" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="U2" pin="16" pinfunction="PB4" pintype="bidirectional"/>
+    </net>
+    <net code="16" name="MOSI">
+      <node ref="J13" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="U2" pin="17" pinfunction="PB5" pintype="bidirectional"/>
+    </net>
+    <net code="17" name="Net-(Q1-Pad4)">
+      <node ref="Q1" pin="4" pintype="passive"/>
+      <node ref="R12" pin="2" pintype="passive"/>
+    </net>
+    <net code="18" name="Net-(Q2-Pad4)">
+      <node ref="Q2" pin="4" pintype="passive"/>
+      <node ref="R13" pin="2" pintype="passive"/>
+    </net>
+    <net code="19" name="Net-(Q3-Pad4)">
+      <node ref="Q3" pin="4" pintype="passive"/>
+      <node ref="R15" pin="2" pintype="passive"/>
+    </net>
+    <net code="20" name="Net-(Q4-Pad4)">
+      <node ref="Q4" pin="4" pintype="passive"/>
+      <node ref="R14" pin="2" pintype="passive"/>
+    </net>
+    <net code="21" name="Net-(Q5-Pad4)">
+      <node ref="Q5" pin="4" pintype="passive"/>
+      <node ref="R16" pin="2" pintype="passive"/>
+    </net>
+    <net code="22" name="Net-(Q6-Pad4)">
+      <node ref="Q6" pin="4" pintype="passive"/>
+      <node ref="R17" pin="2" pintype="passive"/>
+    </net>
+    <net code="23" name="Net-(U2-AREF)">
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="U2" pin="20" pinfunction="AREF" pintype="passive"/>
+    </net>
+    <net code="24" name="Net-(U2-PD0)">
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="U2" pin="30" pinfunction="PD0" pintype="bidirectional"/>
+    </net>
+    <net code="25" name="Net-(U2-PD1)">
+      <node ref="R9" pin="2" pintype="passive"/>
+      <node ref="U2" pin="31" pinfunction="PD1" pintype="bidirectional"/>
+    </net>
+    <net code="26" name="Net-(U2-~{RESET}{slash}PC6)">
+      <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+      <node ref="U2" pin="29" pinfunction="~{RESET}/PC6" pintype="bidirectional"/>
+    </net>
+    <net code="27" name="Net-(U3-BSTA)">
+      <node ref="C14" pin="2" pintype="passive"/>
+      <node ref="U3" pin="20" pinfunction="BSTA" pintype="output"/>
+    </net>
+    <net code="28" name="Net-(U3-BSTB)">
+      <node ref="C16" pin="2" pintype="passive"/>
+      <node ref="U3" pin="17" pinfunction="BSTB" pintype="output"/>
+    </net>
+    <net code="29" name="Net-(U3-BSTC)">
+      <node ref="C17" pin="2" pintype="passive"/>
+      <node ref="U3" pin="14" pinfunction="BSTC" pintype="output"/>
+    </net>
+    <net code="30" name="Net-(U3-GHA)">
+      <node ref="R12" pin="1" pintype="passive"/>
+      <node ref="U3" pin="19" pinfunction="GHA" pintype="output"/>
+    </net>
+    <net code="31" name="Net-(U3-GHB)">
+      <node ref="R13" pin="1" pintype="passive"/>
+      <node ref="U3" pin="16" pinfunction="GHB" pintype="output"/>
+    </net>
+    <net code="32" name="Net-(U3-GHC)">
+      <node ref="R15" pin="1" pintype="passive"/>
+      <node ref="U3" pin="13" pinfunction="GHC" pintype="output"/>
+    </net>
+    <net code="33" name="Net-(U3-GLA)">
+      <node ref="R14" pin="1" pintype="passive"/>
+      <node ref="U3" pin="11" pinfunction="GLA" pintype="output"/>
+    </net>
+    <net code="34" name="Net-(U3-GLB)">
+      <node ref="R16" pin="1" pintype="passive"/>
+      <node ref="U3" pin="10" pinfunction="GLB" pintype="output"/>
+    </net>
+    <net code="35" name="Net-(U3-GLC)">
+      <node ref="R17" pin="1" pintype="passive"/>
+      <node ref="U3" pin="9" pinfunction="GLC" pintype="output"/>
+    </net>
+    <net code="36" name="PWM_INPUT">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U2" pin="12" pinfunction="PB0" pintype="bidirectional"/>
+    </net>
+    <net code="37" name="RX">
+      <node ref="J9" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+    </net>
+    <net code="38" name="TX">
+      <node ref="J10" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="R9" pin="1" pintype="passive"/>
+    </net>
+    <net code="39" name="XTAL1">
+      <node ref="C9" pin="2" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="U2" pin="7" pinfunction="XTAL1/PB6" pintype="bidirectional"/>
+      <node ref="Y1" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="40" name="XTAL2">
+      <node ref="C10" pin="2" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="U2" pin="8" pinfunction="XTAL2/PB7" pintype="bidirectional"/>
+      <node ref="Y1" pin="3" pinfunction="3" pintype="passive"/>
+    </net>
+    <net code="41" name="unconnected-(U2-ADC6-Pad19)">
+      <node ref="U2" pin="19" pinfunction="ADC6" pintype="input+no_connect"/>
+    </net>
+    <net code="42" name="unconnected-(U2-ADC7-Pad22)">
+      <node ref="U2" pin="22" pinfunction="ADC7" pintype="input+no_connect"/>
+    </net>
+    <net code="43" name="unconnected-(U2-PC3-Pad26)">
+      <node ref="U2" pin="26" pinfunction="PC3" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="44" name="unconnected-(U2-PC4-Pad27)">
+      <node ref="U2" pin="27" pinfunction="PC4" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="45" name="unconnected-(U2-PC5-Pad28)">
+      <node ref="U2" pin="28" pinfunction="PC5" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(U2-PD5-Pad9)">
+      <node ref="U2" pin="9" pinfunction="PD5" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(U2-PD7-Pad11)">
+      <node ref="U2" pin="11" pinfunction="PD7" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="48" name="unconnected-(U3-DT-Pad21)">
+      <node ref="U3" pin="21" pinfunction="DT" pintype="input+no_connect"/>
+    </net>
+    <net code="49" name="unconnected-(U3-MODE-Pad5)">
+      <node ref="U3" pin="5" pinfunction="MODE" pintype="input+no_connect"/>
+    </net>
+    <net code="50" name="unconnected-(U3-NC-Pad7)">
+      <node ref="U3" pin="7" pinfunction="NC" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="51" name="unconnected-(U3-NC-Pad8)">
+      <node ref="U3" pin="8" pinfunction="NC" pintype="unspecified+no_connect"/>
+    </net>
+  </nets>
+</export>
