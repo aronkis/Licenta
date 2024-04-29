@@ -1,4 +1,4 @@
-23147162361199731
+23150713675682986
 74HCT08BQ115
 74HCT08BQ115
 74HCT08BQ,115-2
@@ -6,6 +6,13 @@ Integrated Circuit
 0
 15
 15
+8730
+8730
+
+
+0
+1
+1
 150121M173000
 CHIP_173000
 
@@ -55726,10 +55733,10 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
-ECS-80-12-30BQ-JES-TR
-ECS-80-12_ECS
-
-ECS-80-12-30BQ-JES-TR 
+ECS-80-12-33-JGN-TR
+ECS801233JGNTR
+ECS-80-12-33-JGN-TR-2
+Crystal or Oscillator
 0
 4
 4
@@ -94825,6 +94832,13 @@ Varistor
 Varistor_Panasonic_VF
 Panasonic VF series varistor, 6x8mm body, 3.2mm height, https://mediap.industry.panasonic.eu/assets/imported/industrial.panasonic.com/cdbs/www-data/pdf/AWA0000/AWA0000C4.pdf
 Varistor VF
+0
+2
+2
+XZMDKVG55W-4
+LED_KVG55W-4_SLD
+
+XZMDKVG55W-4 
 0
 2
 2
