@@ -3101,7 +3101,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2m"
+		(property "Value" "5m"
 			(at 192.405 113.03 0)
 			(effects
 				(font
@@ -4887,7 +4887,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2m"
+		(property "Value" "5m"
 			(at 141.605 113.665 0)
 			(effects
 				(font
@@ -5227,7 +5227,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2m"
+		(property "Value" "5m"
 			(at 247.015 113.03 0)
 			(effects
 				(font

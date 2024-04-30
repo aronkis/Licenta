@@ -11,4 +11,5 @@
   (lib (name "ECS-80-12-33-JGN-TR")(type "KiCad")(uri "${KIPRJMOD}/Components/ECS_80_12_33_JGN_TR/ECS-80-12-33-JGN-TR.pretty")(options "")(descr ""))
   (lib (name "8730")(type "KiCad")(uri "${KIPRJMOD}/Components/8730/8730.pretty")(options "")(descr ""))
   (lib (name "TLV76750DRVR")(type "KiCad")(uri "${KIPRJMOD}/Components/TLV76750DRVR/TLV76750DRVR.pretty")(options "")(descr ""))
+  (lib (name "SDR0503_332JL")(type "KiCad")(uri "${KIPRJMOD}/Components/SDR0503_332JL/SDR0503_332JL.pretty")(options "")(descr ""))
 )
