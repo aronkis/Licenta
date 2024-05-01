@@ -2798,7 +2798,7 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 71.12) (xy 120.65 74.93)
+			(xy 128.27 71.12) (xy 128.27 72.39)
 		)
 		(stroke
 			(width 0)
@@ -3318,7 +3318,7 @@
 	)
 	(wire
 		(pts
-			(xy 129.54 71.12) (xy 120.65 71.12)
+			(xy 128.27 71.12) (xy 129.54 71.12)
 		)
 		(stroke
 			(width 0)
@@ -3586,9 +3586,9 @@
 			)
 		)
 	)
-	(global_label "PWM"
+	(global_label "PWM_IN"
 		(shape input)
-		(at 173.99 121.92 0)
+		(at 173.99 119.38 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3598,7 +3598,7 @@
 		)
 		(uuid "218aa701-ebb9-4dad-9f44-f1dd6fe3f7a7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 181.148 121.92 0)
+			(at 184.0509 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4556,7 +4556,7 @@
 	)
 	(global_label "COMP_REF_OUT"
 		(shape input)
-		(at 173.99 119.38 0)
+		(at 173.99 121.92 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4566,7 +4566,7 @@
 		)
 		(uuid "e22f730e-cff1-44b7-a8bd-f0497eb9cc1f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 191.3685 119.38 0)
+			(at 191.3685 121.92 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5100,7 +5100,7 @@
 		(dnp no)
 		(uuid "0d93554a-febd-4a2d-acd8-ee7453578ae3")
 		(property "Reference" "C5"
-			(at 140.1318 52.1462 0)
+			(at 149.86 51.816 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5109,7 +5109,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 140.1318 54.6862 0)
+			(at 149.86 54.356 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5729,7 +5729,7 @@
 		(dnp no)
 		(uuid "2b720cda-d770-4386-a944-a5807944f0f7")
 		(property "Reference" "C4"
-			(at 129.9718 52.1462 0)
+			(at 129.286 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5738,7 +5738,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 129.9718 54.6862 0)
+			(at 129.286 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8744,7 +8744,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 120.65 74.93 0)
+		(at 128.27 72.39 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8752,7 +8752,7 @@
 		(dnp no)
 		(uuid "f709d434-8ec6-4eec-baa3-2b5bbe38b3ea")
 		(property "Reference" "#PWR019"
-			(at 120.65 81.28 0)
+			(at 128.27 78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8761,7 +8761,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 120.65 78.74 0)
+			(at 128.27 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8769,7 +8769,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 120.65 74.93 0)
+			(at 128.27 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8778,7 +8778,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 120.65 74.93 0)
+			(at 128.27 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8787,7 +8787,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 120.65 74.93 0)
+			(at 128.27 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
