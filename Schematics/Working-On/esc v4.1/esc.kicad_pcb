@@ -4113,7 +4113,7 @@
 		(at 68.2 48.2)
 		(descr "SMD Crystal SERIES SMD3225/4 http://www.txccrystal.com/images/pdf/7m-accuracy.pdf, 3.2x2.5mm^2 package")
 		(tags "SMD SMT crystal")
-		(property "Reference" "8MHz"
+		(property "Reference" "XTAL"
 			(at 0 -2.1 0)
 			(layer "F.SilkS")
 			(uuid "3d113504-427e-4fae-b5c4-e84308a37d4d")
