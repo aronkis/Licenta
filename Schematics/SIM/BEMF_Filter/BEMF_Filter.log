@@ -1,11 +1,11 @@
-Circuit: * C:\Users\KAron\OneDrive - Analog Devices, Inc\Documents\Git\Licenta\Schematics\SIM\BEMF_Filter.asc
+Circuit: * C:\Users\KAron\OneDrive - Analog Devices, Inc\Documents\Git\Licenta\Schematics\SIM\BEMF_Filter\BEMF_Filter.asc
 
 WARNING: Less than two connections to node ref.  This node is used by v3.
 WARNING: Less than two connections to node ref2.  This node is used by v5.
 Direct Newton iteration for .op point succeeded.
 
-Date: Wed May  8 15:31:58 2024
-Total elapsed time: 0.076 seconds.
+Date: Fri May 10 12:08:30 2024
+Total elapsed time: 0.075 seconds.
 
 tnom = 27
 temp = 27
@@ -15,9 +15,9 @@ traniter = 0
 tranpoints = 0
 accept = 0
 rejected = 0
-matrix size = 15
+matrix size = 16
 fillins = 0
 solver = Normal
 Avg thread counts: 12.0/0.0/12.0/12.0
-Matrix Compiler1:      25 opcodes
-Matrix Compiler2: 795 bytes object code size
+Matrix Compiler1:      26 opcodes
+Matrix Compiler2: 880 bytes object code size
