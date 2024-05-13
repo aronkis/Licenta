@@ -53,11 +53,10 @@ void initADC(void)
 	ADCSRA |= SET_BIT(ADEN) | SET_BIT(ADSC) | SET_BIT(ADIF) | ADC_PRESCALER_8;
 	while (ADCSRA & (1 << ADSC)) {}
 	vbusVoltage = ADCH;
-	debugMode = vbusVoltage > 1000 ? 0 : 1;	
+	debugMode = (vbusVoltage > 1000) ? 0 : 1;	
 
 	ADCSRA &= CLEAR_BIT(ADSC);
-	ADCSRA &= CLEAR_BIT(ADIE);
-	ADCSRA |= SET_BIT(ADEN) | SET_BIT(ADIF) | ADC_PRESCALER_8; // | SET_BIT(ADATE) //ADCSRB = ADC_TRIGGER_SOURCE;
+	ADCSRA |= SET_BIT(ADEN) | SET_BIT(ADIF) | SET_BIT(ADATE) | ADC_PRESCALER_8;
 }
 
 // TODO: Should only be used above 8k RPM
@@ -124,8 +123,9 @@ void startMotor()
 
 	// Soft start done.
 	TCNT1 = 0;
-	SET_TIMER1_COMMUTATE_INT;
 	filteredTimeSinceCommutation = startupDelays[START_UP_COMMS - 1] * (DELAY_MULTIPLIER / 2);
+	OCR1B = ZC_DETECTION_HOLDOFF_TIME;
+	SET_TIMER1_HOLDOFF_INT;
 }
 
 void generateTables(void)
@@ -172,7 +172,7 @@ void runMotor(void)
 uint8_t readChannel(uint8_t adcChannel)
 {
 	ADMUX = adcChannel;
-	ADCSRA |= SET_BIT(ADSC);
+	START_ADC_CONVERSION;
 	while (ADCSRA & (1 << ADSC)) {}
 	return ADCH;
 }

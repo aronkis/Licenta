@@ -58,7 +58,6 @@ ISR (TIMER0_OVF_vect) // ZC detection
     uint8_t adcValue;
 
     ADCSRA &= CLEAR_BIT(ADATE);
-    ADCSRA &= CLEAR_BIT(ADIE);
 
     while (!(ADCSRA & (1 << ADIF)));
 
@@ -74,22 +73,21 @@ ISR (TIMER0_OVF_vect) // ZC detection
                                         (COMMUTATION_TIMING_IIR_COEFF_A + COMMUTATION_TIMING_IIR_COEFF_B)); // time related
         OCR1A = filteredTimeSinceCommutation; 
 
-        speedUpdated = TRUE; 
-
         SET_TIMER1_COMMUTATE_INT;
         CLEAR_INTERRUPT_FLAGS(TIFR1);
-        DISABLE_ALL_TIMER0_INTS;
 
-      	while (ADCSRA & (1 << ADSC)) {}
+      	WAIT_FOR_ADC_CONVERSION;
 
         speedRef = readChannel(ADC_SPD_REF_PIN);
         vbusVoltage = readChannel(ADC_VBUS_PIN);
+        
+        speedUpdated = TRUE; 
     }
     else
     {
         uint8_t tempADMUX = ADMUX;
     
-       	while (ADCSRA & (1 << ADSC)) {}
+       	WAIT_FOR_ADC_CONVERSION;
 
         shuntVoltageCoilA = readChannel(ADC_CURR_A_PIN);
         shuntVoltageCoilB = readChannel(ADC_CURR_B_PIN);
@@ -100,6 +98,7 @@ ISR (TIMER0_OVF_vect) // ZC detection
         ADMUX = tempADMUX;
     }
 
+    ADCSRA |= SET_BIT(ADATE);
 }
 
 ISR(TIMER1_COMPA_vect) // Commutate
@@ -109,26 +108,23 @@ ISR(TIMER1_COMPA_vect) // Commutate
 
     CHECK_ZERO_CROSS_POLARITY;
 
+    DISABLE_ALL_TIMER1_INTS;
     CLEAR_INTERRUPT_FLAGS(TIFR1);
     OCR1B = ZC_DETECTION_HOLDOFF_TIME;
     SET_TIMER1_HOLDOFF_INT;
 
-    wdt_reset();
+    //wdt_reset();
 }
 
 ISR(TIMER1_COMPB_vect) // Enable ZC Detection
 {
     CLEAR_INTERRUPT_FLAGS(TIFR0);
     CLEAR_INTERRUPT_FLAGS(TIFR1);
-    SET_TIMER0_ZC_DETECTION_INT;
     DISABLE_ALL_TIMER1_INTS;
 
     ADMUX = ADMUXTable[nextPhase];
 
     while (!(ADCSRA & (1 << ADIF)));
-
-    ADCSRA &= CLEAR_BIT(ADIE);
-    //ADCSRA |= SET_BIT(ADSC) | SET_BIT(ADATE);
 
     nextPhase++;
     if (nextPhase >= 6)

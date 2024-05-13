@@ -21,7 +21,7 @@ build: compile
 	
 compile: 
 	@mkdir -p build
-	${CC} ${BUILD_NAME}.c ${INCLUDES} -o ${BUILD_PATH}/${BUILD_NAME}.elf ${CFLAGS} \
+	${CC} ${BUILD_NAME}.c ${INCLUDES} -o ${BUILD_PATH}/${BUILD_NAME}.elf ${CFLAGS} 
 
 ison:
 ifeq (${ENV}, LINUX)
