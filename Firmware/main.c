@@ -40,7 +40,7 @@ int main(void)
             {
                 //uart_send_string("Speed updated\n\r");
                 speedUpdated = FALSE;
-                SET_COMPB_TRIGGER_VALUE(PWM_START_VALUE);
+                setCompBTriggerValue(PWM_START_VALUE);
             }
             else
             {

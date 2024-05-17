@@ -1,8 +1,8 @@
 #ifndef _FUNCTIONS_H_
 #define _FUNCTIONS_H_
-#define ADC_MEASURE
 
 #include <stdint.h>
+#include <avr/io.h>
 
 #define FALSE 0
 #define TRUE  (!FALSE)
@@ -14,7 +14,6 @@
 #define PWM_START_VALUE 130
 #define PWM_MAX_VALUE   200
 #define DELAY_MULTIPLIER 100
-
 
 #define AH PB5
 #define BH PB4
@@ -34,9 +33,9 @@
 
 // ADC settings
 /*  ZC_DETECTION_THRESHOLD = VIN * 255 / VREF; 
-    VIN  = VBUS* / 2 = 1.3955, *  where VBUS is downscaled by VD/LPF
-    VREF = 5000;
-    ZC_DETECTION_THRESHOLD = 13955. * 255 / 5000 = 71
+    VIN  = VBUS* / 2 = 1.3955 [V] = 1395.5 [mV], *  where VBUS is downscaled by VD/LPF
+    VREF = 5000 [mV];
+    ZC_DETECTION_THRESHOLD = 1395.5 * 255 / 5000 = 71
 */
 // TODO: Might need to add an EXTERNAL_VOLTAGE_REFERENCE macro to compensate for small diviastions.
 #define ZC_DETECTION_THRESHOLD 71
@@ -52,7 +51,7 @@
 #define ADC_REF_SELECTION ((0 << REFS1) | (1 << REFS0)) // Using AVcc as the AREF
 #define ADC_RES_ADJUST (1 << ADLAR) //8 bit precision
 #define ADC_PRESCALER_8 ((0 << ADPS2) | (1 << ADPS1) | (1 << ADPS0)) // limit the ADC clock to 1 MHz
-#define ADC_TRIGGER_SOURCE ((1 << ADTS2) | (0 << ADTS1) | (0 << ADTS0)) // timer0 overflow to trigger a conversion
+#define ADC_TRIGGER_SOURCE ((0 << ADTS2) | (0 << ADTS1) | (0 << ADTS0)) // timer0 overflow to trigger a conversion; ADCSRB = 0
 #define ADMUX_COIL_A  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_COIL_A_PIN)
 #define ADMUX_COIL_B  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_COIL_B_PIN)
 #define ADMUX_COIL_C  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_COIL_C_PIN)
@@ -61,24 +60,15 @@
 #define ADMUX_CURR_C  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_CURR_C_PIN)
 #define ADMUX_SPD_REF (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_SPD_REF_PIN)
 #define ADMUX_VBUS    (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_VBUS_PIN)
-#define START_ADC_CONVERSION (ADCSRA |= SET_BIT(ADSC))
-#define WAIT_FOR_ADC_CONVERSION (while (ADCSRA & (1 << ADSC)) {})
-#define CHECK_ZERO_CROSS_POLARITY (zeroCrossPolarity = nextPhase & 0x01)
 
-#define SHUNT_RESISTANCE 5 //tbd
+#define SHUNT_RESISTANCE 20 //[mOhm]
 #define ADC_RESOLUTION 256
-#define TICKS_PER_MINUTE (1000000UL * 60)
 
-// Comparator settings
-#ifdef COMPARATOR_MEASURE
-#define RISING  ((1 << ACIS0) | (1 << ACIS1))
-#define FALLING  (1 << ACIS1)
-#endif
+#define TICKS_PER_SECOND 1000000UL
+#define TICKS_PER_MINUTE (TICKS_PER_SECOND * 60)
 
-#ifdef ADC_MEASURE
 #define RISING 0
 #define FALLING 1
-#endif 
 
 #define DRIVE_PORT PORTB
 #define DRIVE_REG  DDRB
@@ -86,28 +76,17 @@
 #define START_UP_COMMS 8
 #define NUMBER_OF_STEPS 6
 #define STARTUP_DELAY 10000
-#define ZC_DETECTION_HOLDOFF_TIME (filteredTimeSinceCommutation / 2) 
-#define SET_COMPB_TRIGGER_VALUE(timerValue) (OCR0B = timerValue)
 
-
-#define CLEAR_INTERRUPT_FLAGS(reg) (reg = reg)
 #define SET_BIT(bitPos) (1 << bitPos)
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
 #define CLEAR_REGISTER(reg) (~reg)
-#define SET_TIMER0_ZC_DETECTION_INT (TIMSK0 |= SET_BIT(TOIE0))
-#define SET_TIMER1_HOLDOFF_INT (TIMSK1 |= SET_BIT(OCIE1B))
-#define SET_TIMER1_COMMUTATE_INT (TIMSK1 |= SET_BIT(OCIE1A))
-#define DISABLE_ALL_TIMER1_INTS (TIMSK1 = 0)
-#define DISABLE_ALL_TIMER0_INTS (TIMSK0 = 0)
-#define constrain(value, min, max) (value < min ? min : \
-                                    value > max ? max : value)
-#define map(input, in_min, in_max, \
-                   out_min, out_max) ( (input - in_min) * (out_max - out_min) \
-                                      /(in_max - in_min) + out_min)
 
 uint8_t driveTable[NUMBER_OF_STEPS];
 uint8_t ADMUXTable[NUMBER_OF_STEPS];
+uint8_t CurrentTable[NUMBER_OF_STEPS];
 uint16_t startupDelays[START_UP_COMMS];
+
+extern volatile uint8_t zcFlag;
 extern volatile uint8_t speedUpdated;
 extern volatile uint8_t currentUpdated;
 extern volatile uint8_t currentHighside;
@@ -132,6 +111,70 @@ void enableWatchdogTimer(void);
 void startupDelay(uint16_t time);
 void generateTables(void);
 void startMotor(void);
+void changeChannel(uint8_t adcChannel);
 uint8_t readChannel(uint8_t adcChannel);
+
+
+inline uint8_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint8_t out_min, uint8_t out_max)
+{
+    return (input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+//inline functions TODO: ADD volatile to functions
+inline void startADCConversion()
+{
+    ADCSRA |= SET_BIT(ADSC);
+    return;
+}
+
+inline void waitForADCConversion()
+{
+    while(!ADCSRA & (1 << ADIF)) {}
+}
+
+inline void checkZeroCrossPolarity()
+{
+    zeroCrossPolarity = nextPhase & 0x01;
+}
+
+inline uint16_t zcDetectionHoldoffTime()
+{
+    return filteredTimeSinceCommutation / 2;
+}
+
+inline void setCompBTriggerValue(uint8_t timerValue)
+{
+    OCR0B = timerValue;
+}
+
+inline void setADCHoldoffInterrupt()
+{
+    TIMSK1 |= SET_BIT(OCIE1B);
+} 
+
+inline void setCommutationTimer()
+{
+    TIMSK1 |= SET_BIT(OCIE1A);
+}
+
+inline void disableTimer1Interrupts()
+{
+    TIMSK1 = 0;
+}
+
+inline void clearInterruptFlags(uint8_t reg)
+{
+    reg = reg;
+}
+
+inline void clearTimer1InterruptFlags()
+{
+    clearInterruptFlags(TIFR1);
+}
+
+inline void disableADCInterrupts()
+{
+    ADCSRA &= CLEAR_BIT(ADIE);
+}
 
 #endif

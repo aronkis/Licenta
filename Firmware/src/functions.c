@@ -17,7 +17,7 @@ void initPorts(void)
 {
     DRIVE_REG |= SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
 			     SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
-	CLEAR_REGISTER(PORTB);
+	PORTB &= CLEAR_REGISTER(PORTB);
 
 	DDRD |= SET_BIT(PWM_PIN);
 
@@ -31,7 +31,7 @@ void initTimers(void)
 	TCCR0A |= SET_BIT(COM0B1) | SET_BIT(WGM00);
 	TCCR0B |= SET_BIT(WGM02) | SET_BIT(CS00); // no prescaling
 	OCR0A  = PWM_TOP_VALUE;
-	CLEAR_INTERRUPT_FLAGS(TIFR0);
+	clearInterruptFlags(TIFR0);
 	TIMSK0 = (0 << TOIE0);
 
     // Timer1 for commutation timing
@@ -51,7 +51,7 @@ void initADC(void)
 {
 	ADMUX = ADC_VBUS_PIN;
 	ADCSRA |= SET_BIT(ADEN) | SET_BIT(ADSC) | SET_BIT(ADIF) | ADC_PRESCALER_8;
-	while (ADCSRA & (1 << ADSC)) {}
+	waitForADCConversion();
 	vbusVoltage = ADCH;
 	debugMode = (vbusVoltage > 1000) ? 0 : 1;	
 
@@ -80,13 +80,13 @@ void initComparator(void)
 
 void startupDelay(uint16_t time)
 {
-	CLEAR_INTERRUPT_FLAGS(TIFR1);
+	clearTimer1InterruptFlags();
 	do
 	{
 		TCNT1 = UINT16_MAX - DELAY_MULTIPLIER;
 		// Wait for timer to overflow.
 		while (!(TIFR1 & (1 << TOV1)));
-		CLEAR_INTERRUPT_FLAGS(TIFR1);
+		clearTimer1InterruptFlags();
 		time--;
 	} while (time);
 }
@@ -94,10 +94,9 @@ void startupDelay(uint16_t time)
 void startMotor()
 {
 	uint8_t i;
-	SET_COMPB_TRIGGER_VALUE(PWM_START_VALUE);
+	setCompBTriggerValue(PWM_START_VALUE);
 
 	nextPhase = 0;
-	//debug_print(nextPhase, "CURRENTLY_IN_PHASE: ");
 	DRIVE_PORT = driveTable[nextPhase];
 	startupDelay(STARTUP_DELAY);
 	// DRIVE_PORT = driveTable[++nextPhase];
@@ -111,10 +110,11 @@ void startMotor()
 		startupDelay(startupDelays[i]);
 
 		ADMUX = ADMUXTable[nextPhase];
-		CHECK_ZERO_CROSS_POLARITY;
+		checkZeroCrossPolarity();
 
+		//nextPhase = (++nextPhase == NUMBER_OF_STEPS) ? 0 : nextPhase++;
 		nextPhase++;
-		if (nextPhase >= 6)
+		if (nextPhase >= NUMBER_OF_STEPS)
 		{
 			nextPhase = 0;
 		}
@@ -124,8 +124,8 @@ void startMotor()
 	// Soft start done.
 	TCNT1 = 0;
 	filteredTimeSinceCommutation = startupDelays[START_UP_COMMS - 1] * (DELAY_MULTIPLIER / 2);
-	OCR1B = ZC_DETECTION_HOLDOFF_TIME;
-	SET_TIMER1_HOLDOFF_INT;
+	OCR1B = zcDetectionHoldoffTime();
+	setADCHoldoffInterrupt();
 }
 
 void generateTables(void)
@@ -144,6 +144,13 @@ void generateTables(void)
 	ADMUXTable[3] = ADC_COIL_C_PIN;
 	ADMUXTable[4] = ADC_COIL_B_PIN;
 	ADMUXTable[5] = ADC_COIL_A_PIN;
+
+	CurrentTable[0] = ADC_CURR_A_PIN;
+	CurrentTable[1] = ADC_CURR_A_PIN;
+	CurrentTable[2] = ADC_CURR_B_PIN;
+	CurrentTable[3] = ADC_CURR_B_PIN;
+	CurrentTable[4] = ADC_CURR_C_PIN;
+	CurrentTable[5] = ADC_CURR_C_PIN;
 
 	// For startup
 	startupDelays[0] = 200;
@@ -169,10 +176,20 @@ void runMotor(void)
 	}
 }
 
+//TODO: PAGE251
+void changeChannel(uint8_t adcChannel)
+{
+    ADCSRA &= CLEAR_BIT(ADATE);
+    ADMUX   = adcChannel;
+	ADMUX  |= SET_BIT(ADLAR); 
+    ADCSRA |= SET_BIT(ADATE);
+}
+
 uint8_t readChannel(uint8_t adcChannel)
 {
-	ADMUX = adcChannel;
-	START_ADC_CONVERSION;
-	while (ADCSRA & (1 << ADSC)) {}
+	changeChannel(adcChannel);
+	startADCConversion();
+	waitForADCConversion();
+	ADCSRA |= SET_BIT(ADIF);
 	return ADCH;
 }
