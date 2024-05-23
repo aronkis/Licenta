@@ -15,14 +15,15 @@
 #define PWM_MAX_VALUE   200
 #define DELAY_MULTIPLIER 100
 
-#define AH PB5
-#define BH PB4
-#define CH PB3
-#define AL PB2
-#define BL PB1
-#define CL PB0
+#define AH PB0
+#define BH PB1
+#define CH PB2
+#define AL PB3
+#define BL PB4
+#define CL PB5
 
 #define PWM_PIN PD5
+#define LED_PIN PD4
 
 #define AH_BL ((SET_BIT(AH)) | SET_BIT(BL))
 #define AH_CL ((SET_BIT(AH)) | SET_BIT(CL))
@@ -73,7 +74,7 @@
 #define DRIVE_PORT PORTB
 #define DRIVE_REG  DDRB
 
-#define START_UP_COMMS 8
+#define START_UP_COMMS 26
 #define NUMBER_OF_STEPS 6
 #define STARTUP_DELAY 10000
 
@@ -108,73 +109,22 @@ void initTimers(void);
 void initADC(void);
 void initComparator(void);
 void enableWatchdogTimer(void);
-void startupDelay(uint16_t time);
+void startupDelay(uint32_t time);
 void generateTables(void);
 void startMotor(void);
 void changeChannel(uint8_t adcChannel);
 uint8_t readChannel(uint8_t adcChannel);
 
 
-inline uint8_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint8_t out_min, uint8_t out_max)
-{
-    return (input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
+uint8_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint8_t out_min, uint8_t out_max);
 
-//inline functions TODO: ADD volatile to functions
-inline void startADCConversion()
-{
-    ADCSRA |= SET_BIT(ADSC);
-    return;
-}
-
-inline void waitForADCConversion()
-{
-    while(!ADCSRA & (1 << ADIF)) {}
-}
-
-inline void checkZeroCrossPolarity()
-{
-    zeroCrossPolarity = nextPhase & 0x01;
-}
-
-inline uint16_t zcDetectionHoldoffTime()
-{
-    return filteredTimeSinceCommutation / 2;
-}
-
-inline void setCompBTriggerValue(uint8_t timerValue)
-{
-    OCR0B = timerValue;
-}
-
-inline void setADCHoldoffInterrupt()
-{
-    TIMSK1 |= SET_BIT(OCIE1B);
-} 
-
-inline void setCommutationTimer()
-{
-    TIMSK1 |= SET_BIT(OCIE1A);
-}
-
-inline void disableTimer1Interrupts()
-{
-    TIMSK1 = 0;
-}
-
-inline void clearInterruptFlags(uint8_t reg)
-{
-    reg = reg;
-}
-
-inline void clearTimer1InterruptFlags()
-{
-    clearInterruptFlags(TIFR1);
-}
-
-inline void disableADCInterrupts()
-{
-    ADCSRA &= CLEAR_BIT(ADIE);
-}
+#define CLEAR_INTERRUPT_FLAGS(reg) (reg = reg)
+#define DISABLE_INTERRUPTS(reg, bit) (reg &= CLEAR_BIT(bit))
+#define DISABLE_TIMERx_INTERRUPT(reg) (reg = 0)
+#define SET_TIMER_INTERRUPT(reg, bit) (reg |= SET_BIT(bit))
+#define SET_COMPx_TRIGGER_VALUE(reg, value) (reg = value)
+#define START_ADC_CONVERSION (ADCSRA |= SET_BIT(ADSC))
+#define CHECK_ZERO_CROSS_POLARITY (zeroCrossPolarity = nextPhase & 0x01)
+#define ZC_DETECTION_HOLDOFF_TIME (filteredTimeSinceCommutation / 4)
 
 #endif

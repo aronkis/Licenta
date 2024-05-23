@@ -15,13 +15,13 @@ volatile uint16_t filteredTimeSinceCommutation = 0;
 
 void initPorts(void)
 {
-    DRIVE_REG |= SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
+    DRIVE_REG = SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
 			     SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
 	PORTB &= CLEAR_REGISTER(PORTB);
 
-	DDRD |= SET_BIT(PWM_PIN);
+	DDRD = SET_BIT(PWM_PIN) | SET_BIT(LED_PIN);
 
-	DIDR0 |= SET_BIT(ADC0D) | SET_BIT(ADC1D) | SET_BIT(ADC2D) |
+	DIDR0 = SET_BIT(ADC0D) | SET_BIT(ADC1D) | SET_BIT(ADC2D) |
 		     SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D); 
 }
 
@@ -31,7 +31,7 @@ void initTimers(void)
 	TCCR0A |= SET_BIT(COM0B1) | SET_BIT(WGM00);
 	TCCR0B |= SET_BIT(WGM02) | SET_BIT(CS00); // no prescaling
 	OCR0A  = PWM_TOP_VALUE;
-	clearInterruptFlags(TIFR0);
+	CLEAR_INTERRUPT_FLAGS(TIFR0);
 	TIMSK0 = (0 << TOIE0);
 
     // Timer1 for commutation timing
@@ -51,7 +51,7 @@ void initADC(void)
 {
 	ADMUX = ADC_VBUS_PIN;
 	ADCSRA |= SET_BIT(ADEN) | SET_BIT(ADSC) | SET_BIT(ADIF) | ADC_PRESCALER_8;
-	waitForADCConversion();
+	while(!(ADCSRA & (1 << ADIF))) {}
 	vbusVoltage = ADCH;
 	debugMode = (vbusVoltage > 1000) ? 0 : 1;	
 
@@ -78,23 +78,23 @@ void initComparator(void)
 // 	sei();
 // }
 
-void startupDelay(uint16_t time)
+void startupDelay(uint32_t time)
 {
-	clearTimer1InterruptFlags();
-	do
+	CLEAR_INTERRUPT_FLAGS(TIFR1);
+	while(time)
 	{
 		TCNT1 = UINT16_MAX - DELAY_MULTIPLIER;
 		// Wait for timer to overflow.
-		while (!(TIFR1 & (1 << TOV1)));
-		clearTimer1InterruptFlags();
+		while (!(TIFR1 & (1 << TOV1))) {}
+		CLEAR_INTERRUPT_FLAGS(TIFR1);
 		time--;
-	} while (time);
+	};
 }
 
 void startMotor()
 {
-	uint8_t i;
-	setCompBTriggerValue(PWM_START_VALUE);
+	uint8_t i, j;
+	SET_COMPx_TRIGGER_VALUE(OCR0B, PWM_START_VALUE);
 
 	nextPhase = 0;
 	DRIVE_PORT = driveTable[nextPhase];
@@ -110,7 +110,7 @@ void startMotor()
 		startupDelay(startupDelays[i]);
 
 		ADMUX = ADMUXTable[nextPhase];
-		checkZeroCrossPolarity();
+		CHECK_ZERO_CROSS_POLARITY;
 
 		//nextPhase = (++nextPhase == NUMBER_OF_STEPS) ? 0 : nextPhase++;
 		nextPhase++;
@@ -119,13 +119,22 @@ void startMotor()
 			nextPhase = 0;
 		}
 		nextStep = driveTable[nextPhase];
+		if (i == 25)
+        {
+            i = 20;
+            j++;
+            if (j == 100)
+            {
+                j = 0;
+            }
+        }
 	}
 
 	// Soft start done.
 	TCNT1 = 0;
 	filteredTimeSinceCommutation = startupDelays[START_UP_COMMS - 1] * (DELAY_MULTIPLIER / 2);
-	OCR1B = zcDetectionHoldoffTime();
-	setADCHoldoffInterrupt();
+	OCR1B = ZC_DETECTION_HOLDOFF_TIME;
+	SET_TIMER_INTERRUPT(TIMSK1, OCIE1B);
 }
 
 void generateTables(void)
@@ -153,14 +162,32 @@ void generateTables(void)
 	CurrentTable[5] = ADC_CURR_C_PIN;
 
 	// For startup
-	startupDelays[0] = 200;
-  	startupDelays[1] = 150;
-  	startupDelays[2] = 100;
-  	startupDelays[3] = 80;
-  	startupDelays[4] = 70;
-  	startupDelays[5] = 65;
-  	startupDelays[6] = 60;
-  	startupDelays[7] = 55;
+	startupDelays[0] = 400;
+  	startupDelays[1] = 350;
+  	startupDelays[2] = 300;
+  	startupDelays[3] = 200;
+  	startupDelays[4] = 100;
+  	startupDelays[5] = 80;
+  	startupDelays[6] = 90;
+  	startupDelays[7] = 70;
+	startupDelays[8] = 60;
+    startupDelays[9] = 50;
+    startupDelays[10] = 40;
+    startupDelays[11] = 40;
+    startupDelays[12] = 30;
+    startupDelays[13] = 30;
+    startupDelays[14] = 20;
+    startupDelays[15] = 20;
+    startupDelays[16] = 15;
+    startupDelays[17] = 15;
+    startupDelays[18] = 10;
+    startupDelays[19] = 10;
+    startupDelays[20] = 10;
+    startupDelays[21] = 10;
+    startupDelays[22] = 10;
+    startupDelays[23] = 10;
+    startupDelays[24] = 10;
+    startupDelays[25] = 10;
 }
 
 void runMotor(void)
@@ -188,8 +215,14 @@ void changeChannel(uint8_t adcChannel)
 uint8_t readChannel(uint8_t adcChannel)
 {
 	changeChannel(adcChannel);
-	startADCConversion();
-	waitForADCConversion();
+	START_ADC_CONVERSION;
+	while(!(ADCSRA & (1 << ADIF))) {}
 	ADCSRA |= SET_BIT(ADIF);
 	return ADCH;
+}
+
+
+uint8_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint8_t out_min, uint8_t out_max)
+{
+    return (input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

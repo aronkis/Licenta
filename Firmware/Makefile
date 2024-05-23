@@ -3,16 +3,16 @@ OBJCOPY=avr-objcopy
 FLASHER=avrdude
 ENV=WIN
 
-CFLAGS=-Os -DF_CPU=16000000UL -mmcu=atmega328p
+CFLAGS=-Os -DF_CPU=8000000UL -mmcu=atmega328p -Wall
 INCLUDES=src/*.c
 BUILD_PATH=build
 BUILD_NAME=main
 
 LINUX_PORT=/dev/ttyUSB1
-WINDOWS_PORT=COM20
+WINDOWS_PORT=usb
 PARTNO=atmega328p
-BAUD=57600
-PROGRAMMER=arduino
+BAUD=19200
+PROGRAMMER=USBasp
 
 all: build
 
@@ -41,7 +41,6 @@ ifeq (${ENV}, WIN)
 	${FLASHER}.exe -c ${PROGRAMMER} -p ${PARTNO} -P ${WINDOWS_PORT} -b ${BAUD} -U flash:w:${BUILD_PATH}/${BUILD_NAME}.hex:a
 endif
 	@make clean
-
 
 clean:
 	@rm ${BUILD_PATH}/*.hex ${BUILD_PATH}/*.elf

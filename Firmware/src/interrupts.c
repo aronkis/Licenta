@@ -37,8 +37,8 @@ void ADC_vect(void) //ZC Detection and current measurements
                                             (COMMUTATION_TIMING_IIR_COEFF_A + COMMUTATION_TIMING_IIR_COEFF_B)); // time related
             OCR1A = filteredTimeSinceCommutation; 
 
-            setCommutationTimer();
-            clearTimer1InterruptFlags();
+            SET_TIMER_INTERRUPT(TIMSK1, OCIE1A);
+            CLEAR_INTERRUPT_FLAGS(TIFR1);
 
             speedRef = readChannel(ADC_SPD_REF_PIN);
             //vbusVoltage = readChannel(ADC_VBUS_PIN);
@@ -66,16 +66,16 @@ void TIMER1_COMPA_vect(void)
     __attribute__((__used__)); 
 void TIMER1_COMPA_vect(void) // Commutate
 {
-    clearTimer1InterruptFlags();
+    CLEAR_INTERRUPT_FLAGS(TIFR1);
     
     DRIVE_PORT = nextStep;
     TCNT1 = 0;
 
-    checkZeroCrossPolarity();
+    CHECK_ZERO_CROSS_POLARITY;
 
-    disableADCInterrupts();
-    OCR1B = zcDetectionHoldoffTime();
-    setADCHoldoffInterrupt();
+    DISABLE_INTERRUPTS(ADCSRA, ADIE);
+    OCR1B = ZC_DETECTION_HOLDOFF_TIME;
+    SET_TIMER_INTERRUPT(TIMSK1, OCIE1B);
     //wdt_reset();
 }
 
@@ -84,12 +84,13 @@ void TIMER1_COMPB_vect(void)
     __attribute__((__used__)); 
 void TIMER1_COMPB_vect(void) // Enable ZC Detection
 {
-    clearTimer1InterruptFlags();
-    disableTimer1Interrupts();
+    CLEAR_INTERRUPT_FLAGS(TIFR1);
+    DISABLE_TIMERx_INTERRUPT(TIMSK1);
+
     zcFlag = TRUE;
 
     changeChannel(ADMUXTable[nextPhase]);
-    startADCConversion();
+    START_ADC_CONVERSION;
 
     nextPhase++;
     if (nextPhase >= 6)
@@ -130,8 +131,7 @@ void TIMER1_COMPB_vect(void) // Enable ZC Detection
 //             PWMInput /= PWM_SAMPLES;
 //             PWMInput = constrain(PWMInput, PWM_IN_MIN, PWM_IN_MAX);
 //             motorState = (PWMInput > PWM_IN_MIN + 115) ? 1 : 0;
-//             timerValue = map(PWMInput, PWM_IN_MIN, PWM_IN_MAX, \
-//                                        PWM_MIN_VALUE, PWM_MAX_VALUE);
+//             timerValue = map(PWMInput, PWM_IN_MIN, PWM_IN_MAX, PWM_MIN_VALUE, PWM_MAX_VALUE);
 //             SET_TIMER(timerValue);
 //             PWMAverageCount = 0;
 //             PWMInput = 0;
