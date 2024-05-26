@@ -11,26 +11,34 @@
 #define BASE_PWM_FREQUENCY 20000
 #define PWM_TOP_VALUE (SYSTEM_CLOCK_FREQUENCY / BASE_PWM_FREQUENCY / 2) //200
 #define PWM_MIN_VALUE  90
-#define PWM_START_VALUE 130
+#define PWM_START_VALUE 120
 #define PWM_MAX_VALUE   200
-#define DELAY_MULTIPLIER 100
+#define DELAY_MULTIPLIER 1000
 
 #define AH PB0
-#define BH PB1
-#define CH PB2
-#define AL PB3
-#define BL PB4
+#define AL PB1
+#define BH PB2
+#define BL PB3
+#define CH PB4
 #define CL PB5
 
 #define PWM_PIN PD5
 #define LED_PIN PD4
 
 #define AH_BL ((SET_BIT(AH)) | SET_BIT(BL))
+#define AL_BL ((SET_BIT(AL)) | SET_BIT(BL))
 #define AH_CL ((SET_BIT(AH)) | SET_BIT(CL))
+#define AL_CL ((SET_BIT(AL)) | SET_BIT(CL))
+
 #define BH_CL ((SET_BIT(BH)) | SET_BIT(CL))
+#define BL_CL ((SET_BIT(BL)) | SET_BIT(CL))
 #define BH_AL ((SET_BIT(BH)) | SET_BIT(AL))
+#define BL_AL ((SET_BIT(BL)) | SET_BIT(AL))
+
 #define CH_AL ((SET_BIT(CH)) | SET_BIT(AL))
+#define CL_AL ((SET_BIT(CL)) | SET_BIT(AL))
 #define CH_BL ((SET_BIT(CH)) | SET_BIT(BL))
+#define CL_BL ((SET_BIT(CL)) | SET_BIT(BL))
 
 // ADC settings
 /*  ZC_DETECTION_THRESHOLD = VIN * 255 / VREF; 
@@ -63,7 +71,10 @@
 #define ADMUX_VBUS    (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_VBUS_PIN)
 
 #define SHUNT_RESISTANCE 20 //[mOhm]
+#define ADC_REFERENCE 5000 // [mV]
 #define ADC_RESOLUTION 256
+
+#define CURRENT_LIMIT 10000 // [mA]
 
 #define TICKS_PER_SECOND 1000000UL
 #define TICKS_PER_MINUTE (TICKS_PER_SECOND * 60)
@@ -74,15 +85,16 @@
 #define DRIVE_PORT PORTB
 #define DRIVE_REG  DDRB
 
-#define START_UP_COMMS 26
+#define START_UP_COMMS 12
 #define NUMBER_OF_STEPS 6
-#define STARTUP_DELAY 10000
+#define STARTUP_DELAY 1000
 
 #define SET_BIT(bitPos) (1 << bitPos)
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
 #define CLEAR_REGISTER(reg) (~reg)
 
 uint8_t driveTable[NUMBER_OF_STEPS];
+uint8_t pullDownTable[NUMBER_OF_STEPS];
 uint8_t ADMUXTable[NUMBER_OF_STEPS];
 uint8_t CurrentTable[NUMBER_OF_STEPS];
 uint16_t startupDelays[START_UP_COMMS];
@@ -101,6 +113,9 @@ extern volatile uint8_t speedRef;
 extern volatile uint8_t shuntVoltageCoilA;
 extern volatile uint8_t shuntVoltageCoilB;
 extern volatile uint8_t shuntVoltageCoilC;
+extern volatile uint16_t current;
+extern volatile uint16_t count;
+
 
 extern volatile uint16_t filteredTimeSinceCommutation;
 

@@ -1,6 +1,6 @@
 CC=avr-gcc
 OBJCOPY=avr-objcopy
-FLASHER=avrdude
+FLASHER=/mnt/c/AVRDUDE/avrdude
 ENV=WIN
 
 CFLAGS=-Os -DF_CPU=8000000UL -mmcu=atmega328p -Wall
@@ -12,7 +12,7 @@ LINUX_PORT=/dev/ttyUSB1
 WINDOWS_PORT=usb
 PARTNO=atmega328p
 BAUD=19200
-PROGRAMMER=USBasp
+PROGRAMMER=usbasp
 
 all: build
 

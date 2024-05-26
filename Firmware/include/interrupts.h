@@ -20,4 +20,17 @@ ISR(TIMER1_COMPA_vect); // Commutate
 ISR(TIMER1_COMPB_vect); // ZC detection enable
 ISR(ADC_VECT);          // Zero crossing
 
+
+void  ADC_vect(void) //ZC Detection and current measurements
+    __attribute__((__signal__))
+    __attribute__((__used__));
+
+void TIMER1_COMPA_vect(void)  // Commutate
+    __attribute__((__signal__))
+    __attribute__((__used__)); 
+
+void TIMER1_COMPB_vect(void)  // Enable ZC Detection
+    __attribute__((__signal__))
+    __attribute__((__used__)); 
+
 #endif
