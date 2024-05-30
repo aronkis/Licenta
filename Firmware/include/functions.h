@@ -15,6 +15,9 @@
 #define PWM_MAX_VALUE   200
 #define DELAY_MULTIPLIER 1000
 
+#define GREEN_LED (PORTD &= ~(1 << PD4))
+#define RED_LED (PORTD |= (1 << PD4))
+
 #define AH PB0
 #define AL PB1
 #define BH PB2
@@ -47,7 +50,7 @@
     ZC_DETECTION_THRESHOLD = 1395.5 * 255 / 5000 = 71
 */
 // TODO: Might need to add an EXTERNAL_VOLTAGE_REFERENCE macro to compensate for small diviastions.
-#define ZC_DETECTION_THRESHOLD 71
+#define ZC_DETECTION_THRESHOLD (vbusVoltage / 2)
 
 #define ADC_COIL_A_PIN  0x00
 #define ADC_COIL_B_PIN  0x01
@@ -58,9 +61,9 @@
 #define ADC_VBUS_PIN    0x06
 #define ADC_SPD_REF_PIN 0x07
 #define ADC_REF_SELECTION ((0 << REFS1) | (1 << REFS0)) // Using AVcc as the AREF
-#define ADC_RES_ADJUST (1 << ADLAR) //8 bit precision
+#define ADC_RES_ADJUST (1 << ADLAR) // 8 bit precision
 #define ADC_PRESCALER_8 ((0 << ADPS2) | (1 << ADPS1) | (1 << ADPS0)) // limit the ADC clock to 1 MHz
-#define ADC_TRIGGER_SOURCE ((0 << ADTS2) | (0 << ADTS1) | (0 << ADTS0)) // timer0 overflow to trigger a conversion; ADCSRB = 0
+#define ADC_TRIGGER_SOURCE ((0 << ADTS2) | (0 << ADTS1) | (0 << ADTS0)) // Free running conversion;
 #define ADMUX_COIL_A  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_COIL_A_PIN)
 #define ADMUX_COIL_B  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_COIL_B_PIN)
 #define ADMUX_COIL_C  (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_COIL_C_PIN)
@@ -100,6 +103,7 @@ uint8_t CurrentTable[NUMBER_OF_STEPS];
 uint16_t startupDelays[START_UP_COMMS];
 
 extern volatile uint8_t zcFlag;
+extern volatile uint8_t conversionFlag;
 extern volatile uint8_t speedUpdated;
 extern volatile uint8_t currentUpdated;
 extern volatile uint8_t currentHighside;
@@ -115,6 +119,18 @@ extern volatile uint8_t shuntVoltageCoilB;
 extern volatile uint8_t shuntVoltageCoilC;
 extern volatile uint16_t current;
 extern volatile uint16_t count;
+extern volatile uint8_t adcInt;
+extern volatile uint8_t adcFlag;
+extern volatile uint8_t adcTime;
+extern volatile uint8_t adcRead;
+extern volatile uint8_t compFlag;
+extern volatile uint16_t thirtyDegreeTime;
+extern volatile uint16_t thirtyDegreeTimesave;
+extern volatile uint16_t thirtyDegreeTime1000;
+extern volatile uint16_t thirtyDegreeTime12;
+extern volatile uint16_t TCNT1Save;
+extern volatile uint16_t sixtyDegreeTimes[6];
+
 
 
 extern volatile uint16_t filteredTimeSinceCommutation;
@@ -131,7 +147,7 @@ void changeChannel(uint8_t adcChannel);
 uint8_t readChannel(uint8_t adcChannel);
 
 
-uint8_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint8_t out_min, uint8_t out_max);
+uint16_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t out_max);
 
 #define CLEAR_INTERRUPT_FLAGS(reg) (reg = reg)
 #define DISABLE_INTERRUPTS(reg, bit) (reg &= CLEAR_BIT(bit))

@@ -11,15 +11,16 @@
 #define COMMUTATION_TIMING_IIR_COEFF_A 1
 #define COMMUTATION_TIMING_IIR_COEFF_B 3
 
+#define FILTER_PHASE_DELAY 58 //[us] should calculate with in function of the prescaler
+#define PROCESSING_DELAY 13 //[us] time to make an ADC conversion
+
 extern volatile uint8_t motorState;
 
-//ISR(PCINTx_vect);       // Measure PWM
-//ISR(TIMER2_OVF_vect);   // PWM time measuring
-ISR(TIMER0_OVF_vect);   // Current measure 
-ISR(TIMER1_COMPA_vect); // Commutate
-ISR(TIMER1_COMPB_vect); // ZC detection enable
-ISR(ADC_VECT);          // Zero crossing
 
+void TIMER0_OVF_vect(void)
+    __attribute__((__signal__))
+    __attribute__((__used__));
+void TIMER0_OVF_vect(void); // Read speed reference
 
 void  ADC_vect(void) //ZC Detection and current measurements
     __attribute__((__signal__))
@@ -32,5 +33,14 @@ void TIMER1_COMPA_vect(void)  // Commutate
 void TIMER1_COMPB_vect(void)  // Enable ZC Detection
     __attribute__((__signal__))
     __attribute__((__used__)); 
+
+void TIMER2_COMPA_vect(void)   // Turn off the active phase
+    __attribute__((__signal__))
+    __attribute__((__used__));
+
+void TIMER2_COMPB_vect(void)  // Turn on the active phase
+    __attribute__((__signal__))
+    __attribute__((__used__));
+
 
 #endif

@@ -1,6 +1,6 @@
 CC=avr-gcc
 OBJCOPY=avr-objcopy
-FLASHER=/mnt/c/AVRDUDE/avrdude
+FLASHER=/mnt/c/AVRDUDE/avrdude/avrdude
 ENV=WIN
 
 CFLAGS=-Os -DF_CPU=8000000UL -mmcu=atmega328p -Wall

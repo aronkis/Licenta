@@ -3,28 +3,32 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-volatile uint8_t currentHighside = 0;
 volatile uint8_t nextStep = 0;
 volatile uint8_t nextPhase = 0;
-volatile uint8_t motorState = 0;
-volatile uint8_t zeroCrossPolarity = 0;
 volatile uint8_t vbusVoltage = 0;
 volatile uint8_t debugMode = 0;
-volatile uint16_t motorTurnOffCounter = 0;
+volatile uint8_t adcFlag = 0;
+volatile uint8_t adcTime = 0;
+volatile uint8_t zeroCrossPolarity;
+volatile uint8_t adcRead;
+volatile uint8_t compFlag = FALSE;
+volatile uint8_t adcInt = FALSE;
+volatile uint16_t thirtyDegreeTimesave;
+volatile uint16_t thirtyDegreeTime1000;
+volatile uint16_t thirtyDegreeTime12;
+
 volatile uint16_t filteredTimeSinceCommutation = 0;
-volatile uint16_t current = 0;
-volatile uint16_t count = 0;
 
 void initPorts(void)
 {
 	DRIVE_REG = SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
-							SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
+				SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
 	PORTB &= CLEAR_REGISTER(PORTB);
 
 	DDRD = SET_BIT(PWM_PIN) | SET_BIT(LED_PIN);
 
 	DIDR0 = SET_BIT(ADC0D) | SET_BIT(ADC1D) | SET_BIT(ADC2D) |
-					SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D);
+			SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D);
 }
 
 void initTimers(void)
@@ -34,36 +38,34 @@ void initTimers(void)
 	TCCR0B |= SET_BIT(WGM02) | SET_BIT(CS00); // no prescaling
 	OCR0A = PWM_TOP_VALUE;
 	CLEAR_INTERRUPT_FLAGS(TIFR0);
-	TIMSK0 = (0 << TOIE0);
+	//TIMSK0 &= CLEAR_BIT(TOIE0);
+	//TIMSK0 |= SET_BIT(TOIE0); //enable for speed reference sampling
 
 	// Timer1 for commutation timing
-	TCCR1B = (1 << CS11); // Prescaler 8, 1 MHz
+	TCCR1B = SET_BIT(CS11); // Prescaler 8, 1 MHz
 
-	// Set up timer 2 for 10 and 50 uS interrupts
-	// pull high on the first 10, then pull low on the next 50 then reset
+	// Timer2 for current chopping. 2A Limit
+	// TCCR2A = 0;
+	// TCCR2B |= SET_BIT(CS21); // Prescaler 8, 1 MHz
+	// TIMSK2 |= SET_BIT(OCIE2A) | SET_BIT(OCIE2B);
+	// OCR2A = 25; //20
+	// OCR2B = 30; //40 has to be measured
 }
 
 void initADC(void)
 {
 	ADMUX = ADMUX_VBUS;
 	ADCSRB = 0;
-	ADCSRA = SET_BIT(ADEN) | ADC_PRESCALER_8; //| SET_BIT(ADIE) | SET_BIT(ADIF) |SET_BIT(ADATE)
+	ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIF) | ADC_PRESCALER_8;
 
 	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
 	while (!(ADCSRA & (1 << ADIF))) {} // Wait for conversion to complete
 
-	vbusVoltage = ADCH; // Save the current VBUS voltage (it is used for ADC threshold)
-	debugMode = (vbusVoltage > 100) ? 0 : 1;
-}
+	vbusVoltage = ADCH - 18; // Save the current VBUS voltage (it is used for ADC threshold)
+	debugMode = (vbusVoltage > 50) ? 0 : 1;
 
-// TODO: Should only be used above 8k RPM
-void initComparator(void)
-{
-#ifdef COMPARATOR_MEASURE
-	// ADCSRA &= CLEAR_BIT(ADEN);
-	// ADCSRB |= SET_BIT(ACME);
-	ACSR = (0 << ACBG) | SET_BIT(ACIE) | SET_BIT(ACI) | SET_BIT(ACIS1) | SET_BIT(ACIS0);
-#endif
+	debug_print(vbusVoltage, "vbus = ");
+	debug_print(ZC_DETECTION_THRESHOLD, "THS = ");
 }
 
 // void enableWatchdogTimer(void)
@@ -92,56 +94,59 @@ void startupDelay(uint32_t time)
 
 void startMotor()
 {
+	RED_LED;
 	uint8_t i;
 	uint8_t shuntVoltage = 0;
 	uint16_t count = 0;
-
+	uint8_t adcValue = 0;
 	SET_COMPx_TRIGGER_VALUE(OCR0B, PWM_START_VALUE);
 
 	nextPhase = 0;
-	DRIVE_PORT = driveTable[nextPhase];
+	DRIVE_PORT = driveTable[++nextPhase];
 	startupDelay(STARTUP_DELAY);
-	// DRIVE_PORT = driveTable[++nextPhase];
-	nextPhase++;
 	nextStep = driveTable[nextPhase];
 
 	for (i = 0; i < START_UP_COMMS; i++)
 	{
-		// debug_print(nextPhase, "phase = ");
 		DRIVE_PORT = nextStep;
 		startupDelay(startupDelays[i]);
-
 		changeChannel(ADMUXTable[nextPhase]);
+		sixtyDegreeTimes[nextPhase] = 5;
 
 		CHECK_ZERO_CROSS_POLARITY;
 
-		// shuntVoltage = 1 + readChannel(CurrentTable[nextPhase]);
-		// current = (shuntVoltage * ADC_REFERENCE / ADC_RESOLUTION * 1000) / SHUNT_RESISTANCE; // I = U/R [mA]
-
-		// nextPhase = (++nextPhase == NUMBER_OF_STEPS) ? 0 : nextPhase++;
 		nextPhase++;
-		if (nextPhase >= NUMBER_OF_STEPS)
-		{
-			nextPhase = 0;
-		}
-		nextStep = driveTable[nextPhase];
+        if (nextPhase >= 6)
+        {
+            nextPhase = 0;
+        }
+        nextStep = driveTable[nextPhase];
 
-		if (i == 11)
+		if (i == 10)
 		{
 			i = 9;
 		}
-		count++;
-		if (count == 1000)
-		{
-			break;
-		}
-	}
 
-	// Soft start done.
-	TCNT1 = 0;
-	filteredTimeSinceCommutation = startupDelays[START_UP_COMMS - 1] * (DELAY_MULTIPLIER / 2);
-	OCR1B = ZC_DETECTION_HOLDOFF_TIME;
-	SET_TIMER_INTERRUPT(TIMSK1, OCIE1B);
+		if (count < 300)
+		{
+			count++;
+		}
+		if (count == 300)
+        {
+			debug_print(nextPhase, "npst=");
+            // for (int i = 0; i < NUMBER_OF_STEPS; i++)
+        	// {
+            // 	debug_print(sixtyDegreeTimes[i], "sixtyDegreeTimes[i]=");
+        	// }
+			ADCSRB = ADC_TRIGGER_SOURCE; 
+			ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADATE) | ADC_PRESCALER_8;
+			ADCSRA |= SET_BIT(ADSC); // Start a manual converion
+			count++;
+			break;
+	    }
+	}
+	TCNT1Save = 5000;
+	GREEN_LED;
 }
 
 void generateTables(void)
@@ -181,26 +186,13 @@ void generateTables(void)
 	startupDelays[2] = 10;
 	startupDelays[3] = 8;
 	startupDelays[4] = 8;
-	startupDelays[5] = 7;
-	startupDelays[6] = 7;
-	startupDelays[7] = 6;
-	startupDelays[8] = 6;
-	startupDelays[9] = 3;
-	startupDelays[10] = 3;
-	startupDelays[11] = 3;
-}
-
-void runMotor(void)
-{
-	if (motorState)
-	{
-		motorTurnOffCounter = 0;
-		startMotor();
-		while (motorState)
-		{
-			// TODO: motor turn off steps
-		}
-	}
+	startupDelays[5] = 5;
+	startupDelays[6] = 5;
+	startupDelays[7] = 5;
+	startupDelays[8] = 5;
+	startupDelays[9] = 5;
+	startupDelays[10] = 5;
+	startupDelays[11] = 5;
 }
 
 // TODO: PAGE251
@@ -215,12 +207,14 @@ uint8_t readChannel(uint8_t ADMUX_SETTINGS)
 {
 	changeChannel(ADMUX_SETTINGS);
 	START_ADC_CONVERSION;
-	while (!(ADCSRA & (1 << ADIF))) {} // Wait for conversion to complete
+	while (!(ADCSRA & (1 << ADIF)))
+	{
+	} // Wait for conversion to complete
 	ADCSRA |= SET_BIT(ADIF);
 	return ADCH;
 }
 
-uint8_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint8_t out_min, uint8_t out_max)
+uint16_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t out_max)
 {
 	return (input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

@@ -3,33 +3,42 @@
 #include "./include/serial.h"
 #include <util/delay.h>
 
-void testADC()
-{
-    while (1)
-    {
-        debug_print(readChannel(ADMUX_SPD_REF), "Speedref = ");
-        startupDelay(500);
-    }
-
-}
-
-
 int main(void)
 {
-    uart_init(9600);
+    uart_init(19200);
     initPorts();
     initTimers();
     generateTables();
     initADC();
-    //testADC();
+    RED_LED;
     startMotor();
-
-    while(1)
-    {
-        PORTD |= (1 << PD4);
-        startupDelay(500);
-        PORTD &= ~(1 << PD4);
-        startupDelay(500);
+    while(1) 
+    { 
+        if (adcInt)
+        {
+            debug_print(adcRead, "ar=");
+            adcInt = FALSE;
+        }
+        if (adcFlag)
+        {
+            // for (int i = 0; i < NUMBER_OF_STEPS; i++)
+        	// {
+            // 	debug_print(sixtyDegreeTimes[i], "sixtyDegreeTimesFlag[i]=");
+        	// }
+            debug_print(adcRead, "zcar=");
+            debug_print(ZC_DETECTION_THRESHOLD, "zcth=");
+            debug_print(thirtyDegreeTimesave, "tdtas=");
+            debug_print(thirtyDegreeTime, "tdta=");
+            
+            adcFlag = FALSE;
+        }   
+        if (compFlag)
+        {
+            uart_send_string("comp\n\r");
+			debug_print(nextPhase, "npcpf=");
+            compFlag = FALSE;
+        }
     }
+    RED_LED;
     return 0;
 }
