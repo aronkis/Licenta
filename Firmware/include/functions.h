@@ -13,7 +13,7 @@
 #define PWM_MIN_VALUE  90
 #define PWM_START_VALUE 120
 #define PWM_MAX_VALUE   200
-#define DELAY_MULTIPLIER 1000
+#define DELAY_MULTIPLIER 10
 
 #define GREEN_LED (PORTD &= ~(1 << PD4))
 #define RED_LED (PORTD |= (1 << PD4))
@@ -82,8 +82,8 @@
 #define TICKS_PER_SECOND 1000000UL
 #define TICKS_PER_MINUTE (TICKS_PER_SECOND * 60)
 
-#define RISING 0
-#define FALLING 1
+#define RISING 1
+#define FALLING 0
 
 #define DRIVE_PORT PORTB
 #define DRIVE_REG  DDRB
@@ -100,7 +100,7 @@ uint8_t driveTable[NUMBER_OF_STEPS];
 uint8_t pullDownTable[NUMBER_OF_STEPS];
 uint8_t ADMUXTable[NUMBER_OF_STEPS];
 uint8_t CurrentTable[NUMBER_OF_STEPS];
-uint16_t startupDelays[START_UP_COMMS];
+uint64_t startupDelays[START_UP_COMMS];
 
 extern volatile uint8_t zcFlag;
 extern volatile uint8_t conversionFlag;
@@ -124,13 +124,16 @@ extern volatile uint8_t adcFlag;
 extern volatile uint8_t adcTime;
 extern volatile uint8_t adcRead;
 extern volatile uint8_t compFlag;
+extern volatile uint8_t motorFlag;
 extern volatile uint16_t thirtyDegreeTime;
 extern volatile uint16_t thirtyDegreeTimesave;
 extern volatile uint16_t thirtyDegreeTime1000;
 extern volatile uint16_t thirtyDegreeTime12;
 extern volatile uint16_t TCNT1Save;
+extern volatile uint16_t speedRefMap;
 extern volatile uint16_t sixtyDegreeTimes[6];
 
+extern volatile uint8_t refVolt;
 
 
 extern volatile uint16_t filteredTimeSinceCommutation;
@@ -140,14 +143,14 @@ void initTimers(void);
 void initADC(void);
 void initComparator(void);
 void enableWatchdogTimer(void);
-void startupDelay(uint32_t time);
+void startupDelay(uint64_t time);
 void generateTables(void);
 void startMotor(void);
 void changeChannel(uint8_t adcChannel);
 uint8_t readChannel(uint8_t adcChannel);
 
 
-uint16_t map(uint16_t input, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t out_max);
+long map(long input, long in_min, long in_max, long out_min, long out_max);
 
 #define CLEAR_INTERRUPT_FLAGS(reg) (reg = reg)
 #define DISABLE_INTERRUPTS(reg, bit) (reg &= CLEAR_BIT(bit))

@@ -12,7 +12,9 @@
 #define COMMUTATION_TIMING_IIR_COEFF_B 3
 
 #define FILTER_PHASE_DELAY 58 //[us] should calculate with in function of the prescaler
-#define PROCESSING_DELAY 13 //[us] time to make an ADC conversion
+#define ADC_DELAY 13
+#define INTERRUPT_DELAY 4
+#define PROCESSING_DELAY (INTERRUPT_DELAY) //[us] time to make an ADC conversion
 
 extern volatile uint8_t motorState;
 
