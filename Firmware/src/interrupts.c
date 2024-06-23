@@ -2,44 +2,28 @@
 #include "../include/functions.h"
 #include "../include/serial.h"
 
-#include <avr/wdt.h>
-
-volatile uint8_t adcValue;
 volatile uint8_t adcInt;
-volatile uint8_t adcTime;
 volatile uint8_t adcRead;
-volatile uint8_t compFlag;
-volatile uint16_t count = 0;
-volatile uint16_t count1 = 0;
-volatile uint16_t phaseDelay;
 volatile uint8_t zeroCrossPolarity;
-volatile uint16_t thirtyDegreeTime = 0;
-volatile uint16_t sixtyDegreeTimes[6];
-volatile uint16_t thirtyDegreeTimesave;
-volatile uint16_t thirtyDegreeTime1000;
-volatile uint16_t thirtyDegreeTime12;
-volatile uint16_t TCNT1Save;
-
 volatile uint8_t speedUpdated = 0;
 volatile uint8_t adcFlag = 0;
 volatile uint8_t speedRef = 0;
-volatile uint8_t refVolt = 0;
 volatile uint8_t motorFlag = 0;
-volatile uint8_t ADMUXSave = 0;
-volatile uint16_t speedRefMap = 0;
-
-
+volatile uint16_t thirtyDegreeTime = 0;
+volatile uint16_t sixtyDegreeTimes[6];
+volatile uint16_t thirtyDegreeTimesave;
+volatile uint16_t electricalSpeed; 
 
 void TIMER0_OVF_vect(void)
     __attribute__((__signal__))
     __attribute__((__used__));
 void TIMER0_OVF_vect(void)
 {
-    if (speedRef < 120) 
+    if (speedUpdated)
     {
-        speedRef = 120;
+        SET_COMPx_TRIGGER_VALUE(OCR0B, speedRef);
+        speedUpdated = FALSE;
     }
-    SET_COMPx_TRIGGER_VALUE(OCR0B, speedRef);
 }
 
 //__externally_visibile__ if does not compile into the binary
@@ -52,10 +36,10 @@ void ADC_vect(void) //ZC Detection and current measurements
 
     if (adcFlag == 0)
     {
-        adcRead = ADCH + 5;
+        adcRead = ADCH;
 
-        if (((zeroCrossPolarity == RISING)  && (adcRead >= ZC_DETECTION_THRESHOLD)) || 
-            ((zeroCrossPolarity == FALLING) && (adcRead <= ZC_DETECTION_THRESHOLD)))
+        if (((zeroCrossPolarity == RISING)  && (adcRead > ZC_DETECTION_THRESHOLD)) || 
+            ((zeroCrossPolarity == FALLING) && (adcRead < ZC_DETECTION_THRESHOLD)))
         {
             adcInt = TRUE;
             sixtyDegreeTimes[nextPhase] = TCNT1;
@@ -65,15 +49,35 @@ void ADC_vect(void) //ZC Detection and current measurements
             {
                 thirtyDegreeTime += sixtyDegreeTimes[i];
             }
-            thirtyDegreeTime *= 1000;
-            thirtyDegreeTime /= 12;
+            thirtyDegreeTime = (thirtyDegreeTime / 12);
 
+            if (motorFlag)
+            {
+                OCR1A = thirtyDegreeTime; // - 2 - 4;
+            }
+            else
+            {
+                OCR1A = thirtyDegreeTimesave; // - 2 - 4;
+            }
             adcFlag = 1;
-            OCR1A = thirtyDegreeTimesave; // - 2 - 4;
+            ADMUX = ADMUX_SPD_REF;
             TIFR1  |= (1 << OCF1A);
             TIMSK1 |= SET_BIT(OCIE1A);
-            ADCSRA &= CLEAR_BIT(ADIE);
         }
+    }
+    else if (adcFlag == 1)
+    {
+        speedRef = ADCH;
+        if (speedRef < PWM_MIN_VALUE)
+        {
+            speedRef = PWM_MIN_VALUE;
+        }
+        if (speedRef > PWM_MAX_VALUE)
+        {
+            speedRef = PWM_MAX_VALUE;
+        }
+        speedUpdated = TRUE;
+        ADCSRA &= CLEAR_BIT(ADIE);
     }
     ADCSRA |= SET_BIT(ADSC);       
 }
@@ -85,9 +89,7 @@ void TIMER1_COMPA_vect(void)
 {
     TIFR1  |= (1 << OCF1A);
         
-    TCNT1Save = TCNT1;
     adcFlag = 0;
-    compFlag = TRUE;
     
     DRIVE_PORT = nextStep;
     ADMUX = ADMUXTable[nextPhase];

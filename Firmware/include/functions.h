@@ -10,9 +10,9 @@
 #define SYSTEM_CLOCK_FREQUENCY 8000000
 #define BASE_PWM_FREQUENCY 20000
 #define PWM_TOP_VALUE (SYSTEM_CLOCK_FREQUENCY / BASE_PWM_FREQUENCY / 2) //200
-#define PWM_MIN_VALUE  90
-#define PWM_START_VALUE 120
-#define PWM_MAX_VALUE   200
+#define PWM_MIN_VALUE  30
+#define PWM_START_VALUE 90
+#define PWM_MAX_VALUE   175
 #define DELAY_MULTIPLIER 10
 
 #define GREEN_LED (PORTD &= ~(1 << PD4))
@@ -44,14 +44,8 @@
 #define CL_BL ((SET_BIT(CL)) | SET_BIT(BL))
 
 // ADC settings
-/*  ZC_DETECTION_THRESHOLD = VIN * 255 / VREF; 
-    VIN  = VBUS* / 2 = 1.3955 [V] = 1395.5 [mV], *  where VBUS is downscaled by VD/LPF
-    VREF = 5000 [mV];
-    ZC_DETECTION_THRESHOLD = 1395.5 * 255 / 5000 = 71
-*/
-// TODO: Might need to add an EXTERNAL_VOLTAGE_REFERENCE macro to compensate for small diviastions.
-#define ZC_DETECTION_THRESHOLD (vbusVoltage / 2)
 
+#define ZC_DETECTION_THRESHOLD (vbusVoltage)
 #define ADC_COIL_A_PIN  0x00
 #define ADC_COIL_B_PIN  0x01
 #define ADC_COIL_C_PIN  0x02
@@ -73,8 +67,8 @@
 #define ADMUX_SPD_REF (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_SPD_REF_PIN)
 #define ADMUX_VBUS    (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_VBUS_PIN)
 
-#define SHUNT_RESISTANCE 20 //[mOhm]
-#define ADC_REFERENCE 5000 // [mV]
+#define SHUNT_RESISTANCE 20 // [mOhm]
+#define ADC_REFERENCE 5000  // [mV]
 #define ADC_RESOLUTION 256
 
 #define CURRENT_LIMIT 10000 // [mA]
@@ -88,9 +82,9 @@
 #define DRIVE_PORT PORTB
 #define DRIVE_REG  DDRB
 
-#define START_UP_COMMS 12
+#define START_UP_COMMS 6
 #define NUMBER_OF_STEPS 6
-#define STARTUP_DELAY 1000
+#define STARTUP_DELAY 10000
 
 #define SET_BIT(bitPos) (1 << bitPos)
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
@@ -102,14 +96,10 @@ uint8_t ADMUXTable[NUMBER_OF_STEPS];
 uint8_t CurrentTable[NUMBER_OF_STEPS];
 uint64_t startupDelays[START_UP_COMMS];
 
-extern volatile uint8_t zcFlag;
-extern volatile uint8_t conversionFlag;
 extern volatile uint8_t speedUpdated;
 extern volatile uint8_t currentUpdated;
-extern volatile uint8_t currentHighside;
 extern volatile uint8_t nextStep;
 extern volatile uint8_t nextPhase;
-extern volatile uint8_t motorState;
 extern volatile uint8_t zeroCrossPolarity;
 extern volatile uint8_t vbusVoltage;
 extern volatile uint8_t debugMode;
@@ -118,25 +108,17 @@ extern volatile uint8_t shuntVoltageCoilA;
 extern volatile uint8_t shuntVoltageCoilB;
 extern volatile uint8_t shuntVoltageCoilC;
 extern volatile uint16_t current;
-extern volatile uint16_t count;
 extern volatile uint8_t adcInt;
 extern volatile uint8_t adcFlag;
-extern volatile uint8_t adcTime;
 extern volatile uint8_t adcRead;
-extern volatile uint8_t compFlag;
 extern volatile uint8_t motorFlag;
 extern volatile uint16_t thirtyDegreeTime;
 extern volatile uint16_t thirtyDegreeTimesave;
 extern volatile uint16_t thirtyDegreeTime1000;
-extern volatile uint16_t thirtyDegreeTime12;
-extern volatile uint16_t TCNT1Save;
-extern volatile uint16_t speedRefMap;
 extern volatile uint16_t sixtyDegreeTimes[6];
+extern volatile uint16_t electricalSpeed; 
 
-extern volatile uint8_t refVolt;
 
-
-extern volatile uint16_t filteredTimeSinceCommutation;
 
 void initPorts(void);
 void initTimers(void);
@@ -146,9 +128,7 @@ void enableWatchdogTimer(void);
 void startupDelay(uint64_t time);
 void generateTables(void);
 void startMotor(void);
-void changeChannel(uint8_t adcChannel);
 uint8_t readChannel(uint8_t adcChannel);
-
 
 long map(long input, long in_min, long in_max, long out_min, long out_max);
 

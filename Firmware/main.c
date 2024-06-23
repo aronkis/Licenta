@@ -3,7 +3,6 @@
 #include "./include/serial.h"
 #include <util/delay.h>
 
-uint16_t count2 = 0;
 
 int main(void)
 {
@@ -12,64 +11,38 @@ int main(void)
     initTimers();
     generateTables();
     initADC();
-    RED_LED;
-    thirtyDegreeTimesave = 2000;
-    startMotor();
+    if (!debugMode)
+    {
+        startMotor();
+    }
+    else
+    {
+        uart_send_string("Debug Mode.");
+        while(1)
+        {
+            GREEN_LED;
+            _delay_ms(500);
+            RED_LED;
+            _delay_ms(500);
+        }
+    }
+    GREEN_LED;
     while(1)
     { 
-       
-    //     // if (adcInt)
-    //     // {
-    //     //     debug_print(adcRead, "ar=");
-    //     //     adcInt = FALSE;
-    //     // }
-        if (adcInt) 
-        {
-            count2++;
-            adcInt = FALSE;
-        }
-        if (count2 == 60)
-        {
-            // for (int i = 0; i < NUMBER_OF_STEPS; i++)
-        	// {
-            // 	debug_print(sixtyDegreeTimes[i], "sixtyDegreeTimesFlag[i]=");
-        	// }
-            // uart_send_string("\n\r");
-            if (thirtyDegreeTimesave > 60)
-            {
-                thirtyDegreeTimesave -= 10;
-                debug_print(thirtyDegreeTimesave, "tdts=");
-            }
-            count2 = 0;
-        }
+        debug_print(OCR1A, "OCR1A=");
+        debug_print((714285 / thirtyDegreeTime), "spd=");
+        _delay_ms(250);
+        // for (int i = 0; i < NUMBER_OF_STEPS; i++)
         // {
-            // for (int i = 0; i < NUMBER_OF_STEPS; i++)
-        	// {
-            // 	debug_print(sixtyDegreeTimes[i], "sixtyDegreeTimesFlag[i]=");
-        	// }
-            // debug_print(thirtyDegreeTime12, "tdta=");
-            // debug_print(thirtyDegreeTimesave, "tdtas=");
-            // debug_print(TCNT1Save, "tcnt1s=");
-            // debug_print(adcRead, "zcar=");
-            // debug_print(ZC_DETECTION_THRESHOLD, "zcth=");
-            // uart_send_string("\n\r");
-            // adcInt = FALSE;
-        	// SET_COMPx_TRIGGER_VALUE(OCR0B, speedRef);
-        // }   
-        // if (adcInt == 2)
-        // {
-        //     debug_print(speedRef, "spd_ref=");
-        //     debug_print(speedRefMap, "spdrefmap=");
-        //     uart_send_string("\n\r");
-        //     adcInt = 0;
+        //     debug_print(sixtyDegreeTimes[i], "sxt=");
         // }
-        // if (compFlag)
+        // debug_print(OCR1A, "OCR1A=");
+        // if (adcInt)
         // {
-        //     uart_send_string("comp\n\r");
-		// 	debug_print(nextPhase, "npcpf=");
-        //     uart_send_string("\n\r");
-        //     compFlag = FALSE;
+        //     debug_print(speedRef, "spdr=");
+        //     debug_print(OCR0B, "OCR0B=");
         // }
+        // uart_send_string("\n\r");
     }
     RED_LED;
     return 0;

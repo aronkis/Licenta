@@ -7,16 +7,8 @@ volatile uint8_t nextStep = 0;
 volatile uint8_t nextPhase = 0;
 volatile uint8_t vbusVoltage = 0;
 volatile uint8_t debugMode = 0;
-volatile uint8_t adcTime = 0;
-volatile uint8_t zeroCrossPolarity;
-volatile uint8_t adcRead;
-volatile uint8_t compFlag = FALSE;
 volatile uint8_t adcInt = FALSE;
 volatile uint16_t thirtyDegreeTimesave;
-volatile uint16_t thirtyDegreeTime1000;
-volatile uint16_t thirtyDegreeTime12;
-
-volatile uint16_t filteredTimeSinceCommutation = 0;
 
 void initPorts(void)
 {
@@ -37,8 +29,7 @@ void initTimers(void)
 	TCCR0B |= SET_BIT(WGM02) | SET_BIT(CS00); // no prescaling
 	OCR0A = PWM_TOP_VALUE;
 	CLEAR_INTERRUPT_FLAGS(TIFR0);
-	//TIMSK0 &= CLEAR_BIT(TOIE0);
-	//TIMSK0 |= SET_BIT(TOIE0); //enable for speed reference sampling
+	TIMSK0 |= SET_BIT(TOIE0); //enable for speed reference sampling
 
 	// Timer1 for commutation timing
 	TCCR1B = SET_BIT(CS11); // Prescaler 8, 1 MHz
@@ -54,6 +45,7 @@ void initTimers(void)
 void initADC(void)
 {
 	motorFlag = 0;
+	speedRef = 0;
 	ADMUX = ADMUX_VBUS;
 	ADCSRB = 0;
 	ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIF) | ADC_PRESCALER_8;
@@ -61,11 +53,24 @@ void initADC(void)
 	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
 	while (!(ADCSRA & (1 << ADIF))) {} // Wait for conversion to complete
 
-	vbusVoltage = ADCH - 10; // Save the current VBUS voltage (it is used for ADC threshold)
+	vbusVoltage = ADCH; // Save the current VBUS voltage (it is used for ADC threshold)
 	debugMode = (vbusVoltage > 50) ? 0 : 1;
-
 	debug_print(vbusVoltage, "vbus = ");
 	debug_print(ZC_DETECTION_THRESHOLD, "THS = ");
+
+	// Do not start the ramp-up until de reference voltage is high enough
+	if (!debugMode)
+	{
+		ADMUX = ADMUX_SPD_REF;
+		while (speedRef < PWM_START_VALUE)
+		{
+			ADCSRA |= SET_BIT(ADSC); 
+			while (!(ADCSRA & (1 << ADIF))) {} // Wait for conversion to complete
+			speedRef = ADCH;
+			debug_print(speedRef,"spdr=");
+		}
+	}
+
 }
 
 // void enableWatchdogTimer(void)
@@ -96,65 +101,58 @@ void startupDelay(uint64_t time)
 
 void startMotor()
 {
-	RED_LED;
-	uint8_t i;
 	uint8_t count2 = 0;
-	uint16_t count = 0;
-	uint8_t adcValue = 0;
 	SET_COMPx_TRIGGER_VALUE(OCR0B, PWM_START_VALUE);
 
-	for (uint8_t i = 0; i < NUMBER_OF_STEPS; i++)
-	{
-		sixtyDegreeTimes[i] = 0;
-	}
-
 	nextPhase = 0;
-	DRIVE_PORT = driveTable[nextPhase];
-	nextPhase++;
+	DRIVE_PORT = driveTable[++nextPhase];
 	startupDelay(STARTUP_DELAY);
+
 	nextStep = driveTable[nextPhase];
-	TCNT1 = 0;
-	for (i = 0; i < START_UP_COMMS; i++)
+
+	for (uint8_t i = 0; i < START_UP_COMMS; i++)
 	{
 		DRIVE_PORT = nextStep;
 		
 		startupDelay(startupDelays[i]);
-		changeChannel(ADMUXTable[nextPhase]);
+		ADMUX = ADMUXTable[nextPhase];
 		CHECK_ZERO_CROSS_POLARITY;
+
 		nextPhase++;
-        if (nextPhase >= 6)
+        
+		if (nextPhase >= 6)
         {
             nextPhase = 0;
         }
         nextStep = driveTable[nextPhase];
-
-		if (i == 11)
-		{
-			i = 10;
-		}
-		
-		if (count < 300)
-		{
-			count++;
-		}
-		if (count == 300)
-        {
-			// debug_print(nextPhase, "npst=");
-            // for (int i = 0; i < NUMBER_OF_STEPS; i++)
-        	// {
-            // 	debug_print(sixtyDegreeTimes[i], "sixtyDegreeTimes[i]=");
-        	// }
-			motorFlag = 1;
-			ADCSRB = 0; 
-			ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADIF) | ADC_PRESCALER_8;
-			ADCSRA |= SET_BIT(ADSC); // Start a manual converion
-			count++;
-			sei();
-			break;
-	    }
 	}
-	
-	GREEN_LED;
+	ADCSRB = 0; 
+	ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADIF) | ADC_PRESCALER_8;
+	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
+	sei();
+    thirtyDegreeTimesave = 2510;
+	while (thirtyDegreeTimesave != 100)
+	{
+
+		if (adcInt) 
+		{
+			count2++;
+			adcInt = FALSE;
+		}
+		if (count2 == 2)
+		{
+			if (thirtyDegreeTimesave > 110)
+			{
+				thirtyDegreeTimesave -= 800;
+			}
+			else
+			{
+				thirtyDegreeTimesave = 100;
+				motorFlag = 1;
+			}
+			count2 = 0;
+		}
+	}
 }
 
 void generateTables(void)
@@ -189,31 +187,17 @@ void generateTables(void)
 	CurrentTable[5] = ADMUX_CURR_C;
 
 	// For startup
-	startupDelays[0] = 2000;
-	startupDelays[1] = 1500;
-	startupDelays[2] = 1000;
-	startupDelays[3] = 800;
-	startupDelays[4] = 800;
-	startupDelays[5] = 500;
-	startupDelays[6] = 500;
-	startupDelays[7] = 500;
-	startupDelays[8] = 300;
-	startupDelays[9] = 300;
-	startupDelays[10] = 200;
-	startupDelays[11] = 200;
-}
-
-// TODO: PAGE251
-void changeChannel(uint8_t ADMUX_SETTINGS)
-{
-	ADCSRA &= CLEAR_BIT(ADATE);
-	ADMUX = ADMUX_SETTINGS;
-	ADCSRA |= SET_BIT(ADATE);
+	startupDelays[0] = 1000;
+	startupDelays[1] = 700;
+	startupDelays[2] = 500;
+	startupDelays[3] = 500;
+	startupDelays[4] = 300;
+	startupDelays[5] = 300;
 }
 
 uint8_t readChannel(uint8_t ADMUX_SETTINGS)
 {
-	changeChannel(ADMUX_SETTINGS);
+	ADMUX = ADMUX_SETTINGS;
 	START_ADC_CONVERSION;
 	while (!(ADCSRA & (1 << ADIF)))
 	{
