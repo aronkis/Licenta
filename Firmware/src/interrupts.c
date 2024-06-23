@@ -13,12 +13,19 @@ volatile uint16_t thirtyDegreeTime = 0;
 volatile uint16_t sixtyDegreeTimes[6];
 volatile uint16_t thirtyDegreeTimesave;
 volatile uint16_t electricalSpeed; 
-
+volatile uint16_t motorStopCounter;
+volatile uint8_t programState;
+volatile uint8_t speedRefSave;
 void TIMER0_OVF_vect(void)
     __attribute__((__signal__))
     __attribute__((__used__));
 void TIMER0_OVF_vect(void)
 {
+    if (motorStopCounter >= 3000)
+    {
+        programState = 2;
+    }
+
     if (speedUpdated)
     {
         SET_COMPx_TRIGGER_VALUE(OCR0B, speedRef);
@@ -68,6 +75,14 @@ void ADC_vect(void) //ZC Detection and current measurements
     else if (adcFlag == 1)
     {
         speedRef = ADCH;
+        if (speedRef < 20)
+        {
+            motorStopCounter++;
+        }
+        else
+        {
+            motorStopCounter = 0;
+        }
         if (speedRef < PWM_MIN_VALUE)
         {
             speedRef = PWM_MIN_VALUE;

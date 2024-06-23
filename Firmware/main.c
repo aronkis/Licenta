@@ -3,6 +3,9 @@
 #include "./include/serial.h"
 #include <util/delay.h>
 
+volatile uint8_t programState = 0;
+volatile uint16_t motorStopCounter;
+
 
 int main(void)
 {
@@ -11,11 +14,7 @@ int main(void)
     initTimers();
     generateTables();
     initADC();
-    if (!debugMode)
-    {
-        startMotor();
-    }
-    else
+    if (debugMode)
     {
         uart_send_string("Debug Mode.");
         while(1)
@@ -29,9 +28,29 @@ int main(void)
     GREEN_LED;
     while(1)
     { 
-        debug_print(OCR1A, "OCR1A=");
-        debug_print((714285 / thirtyDegreeTime), "spd=");
-        _delay_ms(250);
+        switch (programState)
+        {
+        case 0: // starting the motor
+            startMotor();   
+            programState = 1;         
+        break;
+        case 1: //sending data for visualization
+            // debug_print(OCR1A, "OCR1A=");
+            // debug_print((714285 / thirtyDegreeTime), "spd=");
+            // debug_print(speedRef, "spdref = ");
+            debug_print(motorStopCounter, "msc = ");
+            // _delay_ms(250);
+        break;
+        case 2: // stop the motor and wait for the voltage ref to increase
+            uart_send_string("ProgramState == 2");
+            stopMotor();
+            _delay_ms(15);
+            initADC();
+            programState = 0;
+        break;
+        default:
+            break;
+        }
         // for (int i = 0; i < NUMBER_OF_STEPS; i++)
         // {
         //     debug_print(sixtyDegreeTimes[i], "sxt=");

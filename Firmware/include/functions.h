@@ -117,7 +117,8 @@ extern volatile uint16_t thirtyDegreeTimesave;
 extern volatile uint16_t thirtyDegreeTime1000;
 extern volatile uint16_t sixtyDegreeTimes[6];
 extern volatile uint16_t electricalSpeed; 
-
+extern volatile uint8_t programState;
+extern volatile uint16_t motorStopCounter;
 
 
 void initPorts(void);
@@ -128,7 +129,9 @@ void enableWatchdogTimer(void);
 void startupDelay(uint64_t time);
 void generateTables(void);
 void startMotor(void);
+void stopMotor(void);
 uint8_t readChannel(uint8_t adcChannel);
+uint8_t waitForSpeedReference(void);
 
 long map(long input, long in_min, long in_max, long out_min, long out_max);
 
