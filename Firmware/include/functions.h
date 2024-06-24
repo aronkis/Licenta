@@ -12,7 +12,7 @@
 #define PWM_TOP_VALUE (SYSTEM_CLOCK_FREQUENCY / BASE_PWM_FREQUENCY / 2) //200
 #define PWM_MIN_VALUE  30
 #define PWM_START_VALUE 90
-#define PWM_MAX_VALUE   175
+#define PWM_MAX_VALUE   199
 #define DELAY_MULTIPLIER 10
 
 #define GREEN_LED (PORTD &= ~(1 << PD4))
@@ -120,7 +120,6 @@ extern volatile uint16_t electricalSpeed;
 extern volatile uint8_t programState;
 extern volatile uint16_t motorStopCounter;
 
-
 void initPorts(void);
 void initTimers(void);
 void initADC(void);
@@ -131,7 +130,6 @@ void generateTables(void);
 void startMotor(void);
 void stopMotor(void);
 uint8_t readChannel(uint8_t adcChannel);
-uint8_t waitForSpeedReference(void);
 
 long map(long input, long in_min, long in_max, long out_min, long out_max);
 

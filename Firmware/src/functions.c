@@ -14,7 +14,7 @@ void initPorts(void)
 {
 	DRIVE_REG = SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
 				SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
-	DRIVE_PORT &= CLEAR_REGISTER(DRIVE_PORT);
+	PORTB &= CLEAR_REGISTER(PORTB);
 
 	DDRD = SET_BIT(PWM_PIN) | SET_BIT(LED_PIN);
 
@@ -51,12 +51,10 @@ void initADC(void)
 	ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIF) | ADC_PRESCALER_8;
 
 	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
-	while ((ADCSRA & (1 << ADSC))) {} // Wait for conversion to complete
+	while (!(ADCSRA & (1 << ADIF))) {} // Wait for conversion to complete
 
 	vbusVoltage = ADCH; // Save the current VBUS voltage (it is used for ADC threshold)
 	debugMode = (vbusVoltage > 50) ? 0 : 1;
-	debug_print(vbusVoltage, "vbus = ");
-	debug_print(ZC_DETECTION_THRESHOLD, "THS = ");
 
 	// Do not start the ramp-up until de reference voltage is high enough
 	if (!debugMode)
@@ -67,7 +65,6 @@ void initADC(void)
 			ADCSRA |= SET_BIT(ADSC); 
 			while (!(ADCSRA & (1 << ADIF))) {} // Wait for conversion to complete
 			speedRef = ADCH;
-			debug_print(speedRef,"spdr=");
 		}
 	}
 
@@ -153,12 +150,6 @@ void startMotor()
 			count2 = 0;
 		}
 	}
-}
-
-void stopMotor(void)
-{
-	DRIVE_PORT = 0x00;
-	ADCSRA = 0x00;
 }
 
 void generateTables(void)
