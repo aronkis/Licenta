@@ -5,12 +5,20 @@
 
 #define RX_BUFFER_SIZE 128
 
-void uart_init(uint32_t baud);
-void uart_send_byte(const char c);
-void uart_send_array(const char *c,uint16_t len);
-void uart_send_string(const char *c);
-uint16_t uart_read_count(void);
-char uart_read(void);
-void debug_print(unsigned int number, const char *text);
+void __attribute__((__signal__))
+     __attribute__((__used__))
+USART_RX_vect(void);
+
+void __attribute__((__signal__))
+     __attribute__((__used__))
+USART_TX_vect(void);
+
+void uartInit(uint32_t baud);
+void uartSendBtye(const char c);
+void uartSendArray(const char *c,uint16_t len);
+void uartSendString(const char *c);
+void debugPrint(unsigned int number, const char *text);
+uint16_t uartReadCount(void);
+char uartRead(void);
 
 #endif

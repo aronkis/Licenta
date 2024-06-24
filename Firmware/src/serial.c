@@ -1,87 +1,97 @@
-
 #include <stdio.h>
 #include <avr/interrupt.h>
 #include "../include/serial.h"
+#include "../include/functions.h"
 
-volatile static char rx_buffer[RX_BUFFER_SIZE] = {0};
-volatile static uint16_t rx_count = 0;	
-volatile static uint8_t uart_tx_busy = 1;
+volatile static char RXBuffer[RX_BUFFER_SIZE] = { 0 };
+volatile static uint16_t RXCount = 0;	
+volatile static uint8_t uartTXBusy = 1;
 
-ISR(USART_RX_vect){
+void USART_RX_vect(void)
+{
+	volatile static uint16_t RXWritePos = 0;
 	
-	volatile static uint16_t rx_write_pos = 0;
-	
-	rx_buffer[rx_write_pos] = UDR0;
-	rx_count++;
-	rx_write_pos++;
-	if(rx_write_pos >= RX_BUFFER_SIZE){
-		rx_write_pos = 0;
+	RXBuffer[RXWritePos] = UDR0;
+	RXCount++;
+	RXWritePos++;
+	if (RXWritePos >= RX_BUFFER_SIZE)
+	{
+		RXWritePos = 0;
 	}
 }
 
-ISR(USART_TX_vect){
-	uart_tx_busy = 1;
+void USART_TX_vect(void)
+{
+	uartTXBusy = 1;
 }
 
-void uart_init(uint32_t baud){
-	
-	uint8_t speed = 16;
+void uartInit(uint32_t baud)
+{
+	static uint8_t speed = 16;
 	
 	baud = (F_CPU/(speed*baud)) - 1;
 	
 	UBRR0H = (baud & 0x0F00) >> 8;
 	UBRR0L = (baud & 0x00FF);
 	
-	UCSR0B |= (1 << TXEN0) | (1 << RXEN0) | (1 << TXCIE0) | (1 << RXCIE0);
-
+	UCSR0B |= SET_BIT(TXEN0) | SET_BIT(RXEN0) |
+		      SET_BIT(TXCIE0) | SET_BIT(RXCIE0);
 	sei();
-	
 }
 
-void uart_send_byte(const char c){
-	while(uart_tx_busy == 0);
-	uart_tx_busy = 0;
+void uartSendBtye(const char c)
+{
+	while(uartTXBusy == 0);
+	uartTXBusy = 0;
 	UDR0 = c;
 }
 
-void uart_send_array(const char *c,uint16_t len){
-	for(uint16_t i = 0; i < len;i++){
-		uart_send_byte(c[i]);
+void uartSendArray(const char *c, uint16_t len)
+{
+	for(uint16_t i = 0; i < len; i++){
+		uartSendBtye(c[i]);
 	}
 }
 
-void uart_send_string(const char *c){
+void uartSendString(const char *c)
+{
 	uint16_t i = 0;
-	do{
-		uart_send_byte(c[i]);
+	
+	do {
+		uartSendBtye(c[i]);
 		i++;
-		
-	}while(c[i] != '\0');
-	uart_send_byte(c[i]);
+	} while(c[i] != '\0');
+
+	uartSendBtye(c[i]);
 }
 
-uint16_t uart_read_count(void){
-	return rx_count;
+uint16_t uartReadCount(void)
+{
+	return RXCount;
 }
 
-char uart_read(void){
-	static uint16_t rx_read_pos = 0;
+char uartRead(void)
+{
+	static uint16_t RXReadPos = 0;
 	char data = 0;
 	
-	data = rx_buffer[rx_read_pos];
-	rx_read_pos++;
-	rx_count--;
-	if(rx_read_pos >= RX_BUFFER_SIZE){
-		rx_read_pos = 0;
+	data = RXBuffer[RXReadPos];
+	RXReadPos++;
+	RXCount--;
+	
+	if(RXReadPos >= RX_BUFFER_SIZE)
+	{
+		RXReadPos = 0;
 	}
+	
 	return data;
 }
 
-void debug_print(unsigned int number, const char *text)
+void debugPrint(unsigned int number, const char *text)
 {
-	char number_str[6];
-	sprintf(number_str, "%d", number);
-	uart_send_string(text);
-	uart_send_string(number_str);
-	uart_send_string("\n\r");
+	char numberStr[6];
+	sprintf(numberStr, "%d", number);
+	uartSendString(text);
+	uartSendString(numberStr);
+	uartSendString("\n\r");
 }
