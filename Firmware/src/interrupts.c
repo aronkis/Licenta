@@ -3,9 +3,9 @@
 #include "../include/serial.h"
 
 // external variables
+volatile enum ADC_STATE commutationState = ADC_BEMF_READ;
 volatile uint8_t backEMFFound;
 volatile uint8_t zeroCrossPolarity;
-volatile uint8_t commutationState = 0;
 volatile uint8_t speedReference = 0;
 volatile uint8_t speedReferenceSave = 0;
 volatile uint8_t motorStarted = FALSE;
@@ -17,6 +17,8 @@ volatile uint16_t motorStopCounter;
 volatile uint16_t sixtyDegreeTimes[6];
 volatile uint8_t backEMFValue;
 volatile uint8_t speedUpdated = 0;
+
+
 
 void TIMER0_OVF_vect(void) // PWM value update
 {
@@ -32,7 +34,7 @@ void ADC_vect(void) // ZC detection and speed reference measurement
     ADCSRA |= SET_BIT(ADIF);
     switch (commutationState)
     {
-        case 0: // checking if a zero-cross occured
+        case ADC_BEMF_READ: // checking if a zero-cross occured
             backEMFValue = ADCH;
 
             if (((zeroCrossPolarity == RISING)  && (backEMFValue > ZC_DETECTION_THRESHOLD)) || 
@@ -57,13 +59,13 @@ void ADC_vect(void) // ZC detection and speed reference measurement
                     OCR1A = motorStartupDelay; // - 2 - 4;
                 }
 
-                commutationState = 1;
+                commutationState = ADC_SPEED_REFERENCE_READ;
                 ADMUX = ADMUX_SPD_REF;
                 TIFR1  |= SET_BIT(OCF1A);
                 TIMSK1 |= SET_BIT(OCIE1A);
             }
         break;
-        case 1: // reading the speed reference
+        case ADC_SPEED_REFERENCE_READ: // reading the speed reference
             speedReference = ADCH;
             speedReferenceSave = speedReference;
             if (speedReference < PWM_MIN_VALUE)
@@ -86,7 +88,7 @@ void TIMER1_COMPA_vect(void) // Commutation
 {
     TIFR1  |= SET_BIT(OCF1A);
         
-    commutationState = 0;
+    commutationState = ADC_BEMF_READ;
     
     DRIVE_PORT = nextStep;
     ADMUX = ADMUXTable[nextPhase];

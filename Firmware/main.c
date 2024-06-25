@@ -14,15 +14,16 @@ int main(void)
     { 
         switch (programState)
         {
-            case 0: // startup
+            case STARTUP: // startup
                 startMotor();
             break;
-            case 1: // running
-                debugPrint((714285 / thirtyDegreeTime), "spd=");
-                debugPrint(OCR0B, "ocr0b=");
+            case RUNNING: // running
+                debugPrint((0xAE62D / thirtyDegreeTime), "spd=");
+                debugPrint(OCR0B, "pwm=");
                 checkForMotorStop();
+                
             break;
-            case 2: // stop/restart
+            case RESTART: // stop/restart
                 stopMotor();
                 checkForStartMotor();
             break;

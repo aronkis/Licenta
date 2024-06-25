@@ -69,7 +69,7 @@
 
 #define START_UP_COMMS 6
 #define NUMBER_OF_STEPS 6
-#define STARTUP_DELAY 10000
+#define STARTUP_DELAY 15000
 
 #define SET_BIT(bitPos) (1 << bitPos)
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
@@ -80,6 +80,20 @@
 #define GREEN_LED (PORTD &= CLEAR_BIT(PD4))
 #define RED_LED (PORTD |= SET_BIT(PD4))
 
+enum ADC_STATE
+{
+     ADC_BEMF_READ,
+     ADC_SPEED_REFERENCE_READ
+};
+
+enum PROGRAM_STATE
+{
+    STARTUP,
+    RUNNING,
+    RESTART
+};
+
+volatile enum ADC_STATE commutationState;
 volatile uint8_t nextStep;
 volatile uint8_t nextPhase;
 volatile uint8_t zeroCrossPolarity;
@@ -87,18 +101,17 @@ volatile uint8_t zcThresholdVoltage;
 volatile uint8_t speedReference;
 volatile uint8_t speedReferenceSave;
 volatile uint8_t backEMFFound;
-volatile uint8_t commutationState;
 volatile uint8_t motorStarted;
 volatile uint16_t thirtyDegreeTime;
 volatile uint16_t motorStartupDelay;
 volatile uint16_t motorStopCounter;
-uint8_t programState;
+enum PROGRAM_STATE programState;
 uint8_t debugMode;
 
 uint8_t driveTable[NUMBER_OF_STEPS];
 uint8_t ADMUXTable[NUMBER_OF_STEPS];
 uint8_t currentTable[NUMBER_OF_STEPS];
-uint64_t startupDelays[START_UP_COMMS];
+uint16_t startupDelays[START_UP_COMMS];
 
 void initPorts(void);
 void initTimers(void);

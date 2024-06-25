@@ -13,7 +13,7 @@ SpeedYAxisLimits = [i for i in range(0, 13000, 1000)]
 
 PWMXAxis = []
 PWMYAxis = []
-PWMYAxisLimits = [(i/10) for i in range(0, 13)]
+PWMYAxisLimits = [i for i in range(0, 120, 10)]
 
 startTime = -1
 count1, count2 = 0, 0 # used for oversampling 
@@ -34,15 +34,14 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
     while ser.inWaiting():
         try:
             line = ser.readline().decode("utf-8")
-            line = line[line.find("=") + 1:]
         except:
             pass
         try:
-            if (int(line) > 1000):
+            if ("spd" in line):
                 if (startTime == -1):
                     startTime = perf_counter()
                 # Add x and y to the rotation speed list
-                speedAverage += int(line)
+                speedAverage += int(getArgumentValue(line))
                 count1 += 1
                 if (count1 == 10):
                     SpeedXAxis.append(round((perf_counter() - startTime), 2))
@@ -50,9 +49,9 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
                     count1 = 0
                     speedAverage = 0
                 
-            if (int(line) < 300 and int(line) > 25):
+            if ("pwm" in line):
                 # Add x and y to the PWM list
-                pwmAverage += (float(line) * 0.005)
+                pwmAverage += (float(getArgumentValue(line)) * 0.5)
                 count2 += 1
                 if (count2 == 10):
                     PWMXAxis.append(round((perf_counter() - startTime), 2))
@@ -81,7 +80,7 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
     ax1.set_xlabel('Time [s]')
     ax1.set_xticklabels(SpeedXAxis, rotation=45, ha='right')
     
-    ax2.set_ylim([0, 1.25])
+    ax2.set_ylim([0, 120])
     ax2.set_yticks(PWMYAxisLimits)
     ax2.set_ylabel('Duty Cycle [%]')
     ax2.set_xlabel('Time [s]')
@@ -115,7 +114,7 @@ def main():
     fig = plt.figure(figsize = (8, 8))
     ax1 = fig.add_subplot(2, 1, 1)
     ax2 = fig.add_subplot(2, 1, 2)
-    plt.subplots_adjust(top = 0.945, bottom = 0.08, hspace = 0.3)
+    plt.subplots_adjust(top = 0.945, bottom = 0.08, hspace = 0.25)
         
     # Set up plot to call animate() function periodically
     ani = animation.FuncAnimation(fig, animate, fargs = (ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLimit), interval = 1/1000)

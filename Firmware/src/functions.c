@@ -10,7 +10,7 @@ volatile uint8_t zcThresholdVoltage = 0;
 volatile uint8_t backEMFFound = FALSE;
 volatile uint16_t motorStartupDelay;
 uint8_t debugMode = 0;
-uint8_t programState = 0;
+enum PROGRAM_STATE programState = 0;
 
 void initPorts(void)
 {
@@ -150,7 +150,7 @@ void startMotor()
 			{
 				motorStartupDelay = 100;
 				motorStarted = TRUE;
-                programState = 1;
+                programState = RUNNING;
 			}
 			startupCommutationCounter = 0;
 		}
@@ -161,16 +161,18 @@ void stopMotor(void)
 {
 	RED_LED;
 	motorStarted = FALSE;
-	commutationState = 0;
+	commutationState = ADC_BEMF_READ;
 	speedReference = 0;
+	motorStopCounter = 0;
 	CLEAR_REGISTER(ADCSRA);
 	CLEAR_REGISTER(ADMUX);
 	CLEAR_REGISTER(DRIVE_PORT);
+	_delay_ms(50);
 }
 
 void checkForMotorStop(void)
 {
-	if (speedReferenceSave < 10)
+	if (speedReferenceSave < 30)
 	{
 		RED_LED;
 		motorStopCounter++;
@@ -178,12 +180,14 @@ void checkForMotorStop(void)
 	else
 	{
 		GREEN_LED;
-		motorStopCounter = 0;
+		if (motorStopCounter > 0)
+		{
+			motorStopCounter--;
+		}
 	}
-	if (motorStopCounter >= 50)
+	if (motorStopCounter >= 25)
 	{
-		speedReference = 0;
-		programState = 2;
+		programState = RESTART;
 	}
 }
 
@@ -202,7 +206,7 @@ void checkForStartMotor(void)
 		_delay_us(50);
 	}
 	motorStopCounter = 0;
-	programState = 0;
+	programState = STARTUP;
 }
 
 void generateTables(void)
