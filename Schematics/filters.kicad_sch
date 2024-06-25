@@ -1157,7 +1157,7 @@
 		)
 		(uuid "2cab2471-2910-41b2-a691-a17177f0617e")
 	)
-	(text "tan(30)\n            ------------------------------- = 2363 Hz\n2 * pi * (33k || 10k + 10k) * 2.2 * 10^(-6)"
+	(text "tan(30)\n            ------------------------------- = 1860 Hz\n2 * pi * (33k || 20k + 10k) * 2.2 * 10^(-6)"
 		(exclude_from_sim no)
 		(at 99.314 44.196 0)
 		(effects
@@ -1167,7 +1167,7 @@
 		)
 		(uuid "4673b121-1328-495f-8a9f-1079a5a1f02a")
 	)
-	(text "max_e_speed = 2363 * 60 = 141720 eRPM\nmax_r_speed = 84000 / 7 =  20245 RPM  "
+	(text "max_e_speed = 1860 * 60  = 111600 eRPM\nmax_r_speed = 111600 / 7 =  15940 RPM  "
 		(exclude_from_sim no)
 		(at 75.692 49.784 0)
 		(effects
