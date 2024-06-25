@@ -15,7 +15,7 @@ USART_TX_vect(void);
 
 void uartInit(uint32_t baud);
 void uartSendBtye(const char c);
-void uartSendArray(const char *c,uint16_t len);
+void uartSendArray(const char *c, uint16_t len);
 void uartSendString(const char *c);
 void debugPrint(unsigned int number, const char *text);
 uint16_t uartReadCount(void);
