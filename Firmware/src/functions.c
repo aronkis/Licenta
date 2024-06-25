@@ -9,8 +9,8 @@ volatile uint8_t nextPhase = 0;
 volatile uint8_t zcThresholdVoltage = 0;
 volatile uint8_t backEMFFound = FALSE;
 volatile uint16_t motorStartupDelay;
-uint8_t debugMode = 0;
 enum PROGRAM_STATE programState = 0;
+uint8_t debugMode = 0;
 
 void initPorts(void)
 {
@@ -57,7 +57,7 @@ void initADC(void)
 	if (debugMode)
 	{
 		uartSendString("Debug Mode.");
-		while(1)
+		while(TRUE)
 		{
 			GREEN_LED;
 			_delay_ms(500);
@@ -88,9 +88,7 @@ void startupDelay(uint64_t time)
 	{
 		TCNT2 = UINT8_MAX - DELAY_MULTIPLIER;
 		// Wait for timer to overflow.
-		while (!(TIFR2 & SET_BIT(TOV2)))
-		{
-		}
+		while (!(TIFR2 & SET_BIT(TOV2))) {}
 		CLEAR_INTERRUPT_FLAGS(TIFR2);
 		time--;
 	};

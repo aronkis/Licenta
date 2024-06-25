@@ -4,8 +4,8 @@
 #include "../include/functions.h"
 
 volatile static char RXBuffer[RX_BUFFER_SIZE] = { 0 };
-volatile static uint16_t RXCount = 0;	
 volatile static uint8_t uartTXBusy = 1;
+volatile static uint16_t RXCount = 0;	
 
 void USART_RX_vect(void)
 {
@@ -29,26 +29,27 @@ void uartInit(uint32_t baud)
 {
 	static uint8_t speed = 16;
 	
-	baud = (F_CPU/(speed*baud)) - 1;
+	baud = (F_CPU / (speed * baud)) - 1;
 	
 	UBRR0H = (baud & 0x0F00) >> 8;
 	UBRR0L = (baud & 0x00FF);
 	
 	UCSR0B |= SET_BIT(TXEN0) | SET_BIT(RXEN0) |
-		      SET_BIT(TXCIE0) | SET_BIT(RXCIE0);
+		     SET_BIT(TXCIE0) | SET_BIT(RXCIE0);
 	sei();
 }
 
 void uartSendBtye(const char c)
 {
-	while(uartTXBusy == 0);
+	while(uartTXBusy == 0) {}
 	uartTXBusy = 0;
 	UDR0 = c;
 }
 
 void uartSendArray(const char *c, uint16_t len)
 {
-	for(uint16_t i = 0; i < len; i++){
+	for(uint16_t i = 0; i < len; i++)
+	{
 		uartSendBtye(c[i]);
 	}
 }

@@ -32,6 +32,7 @@ void TIMER0_OVF_vect(void) // PWM value update
 void ADC_vect(void) // ZC detection and speed reference measurement
 {
     ADCSRA |= SET_BIT(ADIF);
+
     switch (commutationState)
     {
         case ADC_BEMF_READ: // checking if a zero-cross occured
@@ -68,6 +69,7 @@ void ADC_vect(void) // ZC detection and speed reference measurement
         case ADC_SPEED_REFERENCE_READ: // reading the speed reference
             speedReference = ADCH;
             speedReferenceSave = speedReference;
+
             if (speedReference < PWM_MIN_VALUE)
             {
                 speedReference = PWM_MIN_VALUE;
@@ -76,6 +78,7 @@ void ADC_vect(void) // ZC detection and speed reference measurement
             {
                 speedReference = PWM_MAX_VALUE;
             }
+
             speedUpdated = TRUE;
             ADCSRA &= CLEAR_BIT(ADIE);
         break;
@@ -86,7 +89,7 @@ void ADC_vect(void) // ZC detection and speed reference measurement
 
 void TIMER1_COMPA_vect(void) // Commutation
 {
-    TIFR1  |= SET_BIT(OCF1A);
+    TIFR1 |= SET_BIT(OCF1A);
         
     commutationState = ADC_BEMF_READ;
     
