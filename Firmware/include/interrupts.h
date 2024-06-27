@@ -3,7 +3,6 @@
 
 #include <avr/interrupt.h>
 
-
 void __attribute__((__signal__)) 
      __attribute__((__used__))
 TIMER0_OVF_vect(void); // PWM value update
@@ -15,4 +14,5 @@ ADC_vect(void); // ZC detection and speed reference measurement
 void __attribute__((__signal__))
      __attribute__((__used__))
 TIMER1_COMPA_vect(void);  // Commutate
-#endif
+
+#endif //_INTERRUPTS_H_

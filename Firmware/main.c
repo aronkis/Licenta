@@ -14,21 +14,20 @@ int main(void)
     { 
         switch (programState)
         {
-            case STARTUP: // startup
+            case STARTUP:
                 startMotor();
             break;
-            case RUNNING: // running
+            case RUNNING: 
                 debugPrint((0xAE62D / thirtyDegreeTime), "spd=");
                 debugPrint(OCR0B, "pwm=");
                 checkForMotorStop();
                 
             break;
-            case RESTART: // stop/restart
+            case RESTART: 
                 stopMotor();
                 checkForStartMotor();
             break;
         }
     }
     RED_LED;
-    return 0;
 }

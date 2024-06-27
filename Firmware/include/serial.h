@@ -18,7 +18,7 @@ void uartSendBtye(const char c);
 void uartSendArray(const char *c, uint16_t len);
 void uartSendString(const char *c);
 void debugPrint(unsigned int number, const char *text);
-uint16_t uartReadCount(void);
 char uartRead(void);
+uint16_t uartReadCount(void);
 
-#endif
+#endif // _SERIAL_H_

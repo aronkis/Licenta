@@ -33,7 +33,9 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
     
     while ser.inWaiting():
         try:
-            line = ser.readline().decode("utf-8")
+            line = ser.readline().decode("ascii")
+            if '\x00' in line:
+                line = ' '.join(line.split('\x00'))
         except:
             pass
         try:
@@ -60,7 +62,6 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
                     pwmAverage = 0
         except:
             pass
-
     # Limit x and y lists to 20 items
     SpeedXAxis = SpeedXAxis[-plotLimit:]
     SpeedYAxis = SpeedYAxis[-plotLimit:]
