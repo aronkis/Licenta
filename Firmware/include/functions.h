@@ -75,8 +75,6 @@
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
 #define CLEAR_REGISTER(reg) (reg &= ~reg)
 #define CLEAR_INTERRUPT_FLAGS(reg) (reg = reg)
-#define SET_COMPx_TRIGGER_VALUE(reg, value) (reg = value)
-#define CHECK_ZERO_CROSS_POLARITY (zeroCrossPolarity = nextPhase & 0x01)
 #define GREEN_LED (PORTD &= CLEAR_BIT(PD4))
 #define RED_LED (PORTD |= SET_BIT(PD4))
 
@@ -118,11 +116,12 @@ void initTimers(void);
 void initADC(void);
 void initComparator(void);
 void enableWatchdogTimer(void);
-void startupDelay(uint64_t time);
 void generateTables(void);
 void startMotor(void);
 void stopMotor(void);
 void checkForMotorStop(void);
 void checkForStartMotor(void);
+void startupDelay(uint64_t time);
+uint8_t checkForZeroCrossPolarity(void);
 
 #endif

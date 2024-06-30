@@ -18,13 +18,11 @@ volatile uint16_t sixtyDegreeTimes[6];
 volatile uint8_t backEMFValue;
 volatile uint8_t speedUpdated = 0;
 
-
-
 void TIMER0_OVF_vect(void) // PWM value update
 {
     if (speedUpdated)
     {
-        SET_COMPx_TRIGGER_VALUE(OCR0B, speedReference);
+        OCR0B = speedReference;
         speedUpdated = FALSE;
     }
 }
@@ -96,7 +94,7 @@ void TIMER1_COMPA_vect(void) // Commutation
     DRIVE_PORT = nextStep;
     ADMUX = ADMUXTable[nextPhase];
 
-    CHECK_ZERO_CROSS_POLARITY;
+    zeroCrossPolarity = checkForZeroCrossPolarity();
 
     nextPhase++;
     if (nextPhase >= 6)

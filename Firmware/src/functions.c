@@ -15,13 +15,13 @@ uint8_t debugMode = 0;
 void initPorts(void)
 {
 	DRIVE_REG = SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
-				SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
+				      SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
 	CLEAR_REGISTER(PORTB);
 
 	DDRD = SET_BIT(PWM_PIN) | SET_BIT(LED_PIN);
 
 	DIDR0 = SET_BIT(ADC0D) | SET_BIT(ADC1D) | SET_BIT(ADC2D) |
-			SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D);
+			    SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D);
 }
 
 void initTimers(void)
@@ -99,7 +99,7 @@ void startMotor()
 	GREEN_LED;
 
 	uint8_t startupCommutationCounter = 0;
-	SET_COMPx_TRIGGER_VALUE(OCR0B, PWM_START_VALUE);
+	OCR0B = PWM_START_VALUE;
 
 	nextPhase = 0;
 	DRIVE_PORT = driveTable[++nextPhase];
@@ -113,7 +113,7 @@ void startMotor()
 		
 		startupDelay(startupDelays[i]);
 		ADMUX = ADMUXTable[nextPhase];
-		CHECK_ZERO_CROSS_POLARITY;
+		zeroCrossPolarity = checkForZeroCrossPolarity();
 
 		nextPhase++;
         
@@ -127,12 +127,10 @@ void startMotor()
 	ADCSRB  = 0; 
 	ADCSRA  = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADIF) | ADC_PRESCALER_8;
 	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
-	sei();
 
-    motorStartupDelay = 2510;
+  motorStartupDelay = 2510;
 	while (motorStartupDelay != 100)
 	{
-
 		if (backEMFFound) 
 		{
 			startupCommutationCounter++;
@@ -148,7 +146,7 @@ void startMotor()
 			{
 				motorStartupDelay = 100;
 				motorStarted = TRUE;
-                programState = RUNNING;
+				programState = RUNNING;
 			}
 			startupCommutationCounter = 0;
 		}
@@ -192,19 +190,29 @@ void checkForMotorStop(void)
 void checkForStartMotor(void)
 {
 	_delay_ms(100);
+
 	ADMUX = ADMUX_SPD_REF;
 	ADCSRA = SET_BIT(ADEN) | SET_BIT(ADIF) | ADC_PRESCALER_8;
+
 	while (speedReference < PWM_START_VALUE)
 	{
 		ADCSRA |= SET_BIT(ADSC); 
 		while ((ADCSRA & SET_BIT(ADSC))) {} // Wait for conversion to complete
 		ADCSRA |= SET_BIT(ADIF);
+
 		speedReference = ADCH;
 		speedReferenceSave = speedReference;
+
 		_delay_us(50);
 	}
+
 	motorStopCounter = 0;
 	programState = STARTUP;
+}
+
+uint8_t checkForZeroCrossPolarity(void)
+{
+    return (nextPhase & 0x01);
 }
 
 void generateTables(void)
