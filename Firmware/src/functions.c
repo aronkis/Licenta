@@ -9,7 +9,7 @@ volatile uint8_t nextPhase = 0;
 volatile uint8_t zcThresholdVoltage = 0;
 volatile uint8_t backEMFFound = FALSE;
 volatile uint16_t motorStartupDelay;
-enum PROGRAM_STATE programState = 0;
+enum PROGRAM_STATE programState = STARTUP;
 uint8_t debugMode = 0;
 
 void initPorts(void)
@@ -126,7 +126,11 @@ void startMotor()
 
 	ADCSRB  = 0; 
 	ADCSRA  = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADIF) | ADC_PRESCALER_8;
+<<<<<<< HEAD
 	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
+=======
+	ADCSRA |= SET_BIT(ADSC);
+>>>>>>> f557f9daaca3ca2f3fbe2a281541437e801d7cf5
 
   motorStartupDelay = 2510;
 	while (motorStartupDelay != 100)
@@ -197,7 +201,7 @@ void checkForStartMotor(void)
 	while (speedReference < PWM_START_VALUE)
 	{
 		ADCSRA |= SET_BIT(ADSC); 
-		while ((ADCSRA & SET_BIT(ADSC))) {} // Wait for conversion to complete
+		while ((ADCSRA & SET_BIT(ADSC))) {}
 		ADCSRA |= SET_BIT(ADIF);
 
 		speedReference = ADCH;

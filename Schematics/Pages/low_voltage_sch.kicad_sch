@@ -4531,7 +4531,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0bf86c57-bb17-4a03-8ec5-7fb24e9385bd")
-		(property "Reference" "C16"
+		(property "Reference" "C17"
 			(at 64.516 49.784 0)
 			(effects
 				(font
@@ -4585,7 +4585,7 @@
 		(instances
 			(project "esc"
 				(path "/5e78a042-f21c-485f-9078-8bbae1bbdc1b/9f25a095-da1c-4b42-a0b8-dca0a87bd952"
-					(reference "C16")
+					(reference "C17")
 					(unit 1)
 				)
 			)
@@ -5295,7 +5295,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "37e2c4c8-82bb-4e75-b45e-0ab63dd3b201")
-		(property "Reference" "C17"
+		(property "Reference" "C16"
 			(at 64.6938 103.9368 0)
 			(effects
 				(font
@@ -5349,7 +5349,7 @@
 		(instances
 			(project "esc"
 				(path "/5e78a042-f21c-485f-9078-8bbae1bbdc1b/9f25a095-da1c-4b42-a0b8-dca0a87bd952"
-					(reference "C17")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -5994,7 +5994,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "980d3638-302f-46fe-8bc2-00b2bc659afa")
-		(property "Reference" "R17"
+		(property "Reference" "R28"
 			(at 229.87 128.397 90)
 			(effects
 				(font
@@ -6046,7 +6046,7 @@
 		(instances
 			(project "esc"
 				(path "/5e78a042-f21c-485f-9078-8bbae1bbdc1b/9f25a095-da1c-4b42-a0b8-dca0a87bd952"
-					(reference "R17")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -6330,7 +6330,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c18d3a09-ae08-453e-9866-2c5165ff0c65")
-		(property "Reference" "R16"
+		(property "Reference" "R27"
 			(at 238.76 113.03 90)
 			(effects
 				(font
@@ -6382,7 +6382,7 @@
 		(instances
 			(project "esc"
 				(path "/5e78a042-f21c-485f-9078-8bbae1bbdc1b/9f25a095-da1c-4b42-a0b8-dca0a87bd952"
-					(reference "R16")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -6556,7 +6556,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dde01cbd-5cdc-4f56-bd62-f4b60f819a2b")
-		(property "Reference" "8MHz1"
+		(property "Reference" "XTAL1"
 			(at 193.675 40.64 0)
 			(effects
 				(font
@@ -6616,7 +6616,7 @@
 		(instances
 			(project "esc"
 				(path "/5e78a042-f21c-485f-9078-8bbae1bbdc1b/9f25a095-da1c-4b42-a0b8-dca0a87bd952"
-					(reference "8MHz1")
+					(reference "XTAL1")
 					(unit 1)
 				)
 			)

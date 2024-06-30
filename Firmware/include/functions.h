@@ -56,6 +56,7 @@
 #define ADMUX_SPD_REF (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_SPD_REF_PIN)
 #define ADMUX_VBUS    (ADC_REF_SELECTION | ADC_RES_ADJUST | ADC_VBUS_PIN)
 
+// Variables used for the current measure
 #define ADC_RESOLUTION 256
 #define ADC_REFERENCE 5000  // [mV]
 #define SHUNT_RESISTANCE 20 // [mOhm]
@@ -114,8 +115,12 @@ uint16_t startupDelays[START_UP_COMMS];
 void initPorts(void);
 void initTimers(void);
 void initADC(void);
+<<<<<<< HEAD
 void initComparator(void);
 void enableWatchdogTimer(void);
+=======
+void startupDelay(uint64_t time);
+>>>>>>> f557f9daaca3ca2f3fbe2a281541437e801d7cf5
 void generateTables(void);
 void startMotor(void);
 void stopMotor(void);
@@ -124,4 +129,4 @@ void checkForStartMotor(void);
 void startupDelay(uint64_t time);
 uint8_t checkForZeroCrossPolarity(void);
 
-#endif
+#endif // _FUNCTIONS_H_

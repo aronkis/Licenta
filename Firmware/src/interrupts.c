@@ -50,12 +50,12 @@ void ADC_vect(void) // ZC detection and speed reference measurement
 
                 if (motorStarted)
                 {
-                    OCR1A = thirtyDegreeTime; // - 2 - 4;
+                    OCR1A = thirtyDegreeTime;
                 }
                 else
                 {
                     backEMFFound = TRUE;
-                    OCR1A = motorStartupDelay; // - 2 - 4;
+                    OCR1A = motorStartupDelay;
                 }
 
                 commutationState = ADC_SPEED_REFERENCE_READ;
