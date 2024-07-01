@@ -17,11 +17,11 @@ int main(void)
             case STARTUP:
                 startMotor();
             break;
-            case RUNNING: 
-                debugPrint((0xAE62D / thirtyDegreeTime), "spd=");
+            case RUNNING:
+                electricalSpeed = getElectricalSpeed();
+                debugPrint(electricalSpeed, "espd=");
                 debugPrint(OCR0B, "pwm=");
                 checkForMotorStop();
-                
             break;
             case RESTART: 
                 stopMotor();

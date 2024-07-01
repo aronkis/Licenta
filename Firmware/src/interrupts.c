@@ -41,13 +41,8 @@ void ADC_vect(void) // ZC detection and speed reference measurement
             {
                 sixtyDegreeTimes[nextPhase] = TCNT1;
                 TCNT1 = 0;
-                thirtyDegreeTime = 0;
-                for (int i = 0; i < NUMBER_OF_STEPS; i++)
-                {
-                    thirtyDegreeTime += sixtyDegreeTimes[i];
-                }
-                thirtyDegreeTime = (thirtyDegreeTime / 12);
-
+                thirtyDegreeTime = getThirtyDegreeTime();
+                
                 if (motorStarted)
                 {
                     OCR1A = thirtyDegreeTime;
@@ -104,6 +99,24 @@ void TIMER1_COMPA_vect(void) // Commutation
     nextStep = driveTable[nextPhase];  
 
     TIMSK1 &= CLEAR_BIT(OCIE1A);
-    ADCSRA  = SET_BIT(ADEN) | SET_BIT(ADIE) | ADC_PRESCALER_8;
+    ADCSRA |= SET_BIT(ADIE);    
     ADCSRA |= SET_BIT(ADSC); 
+}
+
+void TIMER1_OVF_vect(void)
+{
+    TIFR1 |= SET_BIT(TOV1); 
+    stopMotor();
+    programState = RESTART;
+}
+
+uint16_t getThirtyDegreeTime(void)
+{
+    uint16_t temp = 0;
+    for (int i = 0; i < NUMBER_OF_STEPS; i++)
+    {
+        temp += sixtyDegreeTimes[i];
+    }
+    return temp / 12;
+
 }

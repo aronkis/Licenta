@@ -106,6 +106,7 @@ volatile uint16_t motorStartupDelay;
 volatile uint16_t motorStopCounter;
 enum PROGRAM_STATE programState;
 uint8_t debugMode;
+uint16_t electricalSpeed;
 
 uint8_t driveTable[NUMBER_OF_STEPS];
 uint8_t ADMUXTable[NUMBER_OF_STEPS];
@@ -115,12 +116,8 @@ uint16_t startupDelays[START_UP_COMMS];
 void initPorts(void);
 void initTimers(void);
 void initADC(void);
-<<<<<<< HEAD
 void initComparator(void);
 void enableWatchdogTimer(void);
-=======
-void startupDelay(uint64_t time);
->>>>>>> f557f9daaca3ca2f3fbe2a281541437e801d7cf5
 void generateTables(void);
 void startMotor(void);
 void stopMotor(void);
@@ -128,5 +125,6 @@ void checkForMotorStop(void);
 void checkForStartMotor(void);
 void startupDelay(uint64_t time);
 uint8_t checkForZeroCrossPolarity(void);
+uint16_t getElectricalSpeed(void);
 
 #endif // _FUNCTIONS_H_

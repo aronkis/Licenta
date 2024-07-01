@@ -16,7 +16,7 @@ void initPorts(void)
 {
 	DRIVE_REG = SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
 				      SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
-	CLEAR_REGISTER(PORTB);
+	CLEAR_REGISTER(DRIVE_PORT);
 
 	DDRD = SET_BIT(PWM_PIN) | SET_BIT(LED_PIN);
 
@@ -91,7 +91,7 @@ void startupDelay(uint64_t time)
 		while (!(TIFR2 & SET_BIT(TOV2))) {}
 		CLEAR_INTERRUPT_FLAGS(TIFR2);
 		time--;
-	};
+	}
 }
 
 void startMotor()
@@ -121,18 +121,15 @@ void startMotor()
         {
             nextPhase = 0;
         }
+
         nextStep = driveTable[nextPhase];
 	}
 
 	ADCSRB  = 0; 
 	ADCSRA  = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADIF) | ADC_PRESCALER_8;
-<<<<<<< HEAD
 	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
-=======
-	ADCSRA |= SET_BIT(ADSC);
->>>>>>> f557f9daaca3ca2f3fbe2a281541437e801d7cf5
 
-  motorStartupDelay = 2510;
+  	motorStartupDelay = 2510;
 	while (motorStartupDelay != 100)
 	{
 		if (backEMFFound) 
@@ -155,6 +152,8 @@ void startMotor()
 			startupCommutationCounter = 0;
 		}
 	}
+
+	// TIMSK1 |= SET_BIT(TOIE1); // To activate stall detection
 }
 
 void stopMotor(void)
@@ -217,6 +216,16 @@ void checkForStartMotor(void)
 uint8_t checkForZeroCrossPolarity(void)
 {
     return (nextPhase & 0x01);
+}
+
+uint16_t getElectricalSpeed(void)
+{
+	uint16_t temp = 0;
+	for (int i = 0; i < NUMBER_OF_STEPS; i++)
+	{
+		temp += (thirtyDegreeTime * 2); 
+	}
+	return temp;
 }
 
 void generateTables(void)
