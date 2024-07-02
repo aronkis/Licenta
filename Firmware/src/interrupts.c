@@ -14,9 +14,9 @@ volatile uint16_t motorStartupDelay;
 volatile uint16_t motorStopCounter;
 
 // static variables
-volatile uint16_t sixtyDegreeTimes[6];
 volatile uint8_t backEMFValue;
 volatile uint8_t speedUpdated = 0;
+volatile uint16_t sixtyDegreeTimes[6];
 
 void TIMER0_OVF_vect(void) // PWM value update
 {
@@ -101,13 +101,6 @@ void TIMER1_COMPA_vect(void) // Commutation
     TIMSK1 &= CLEAR_BIT(OCIE1A);
     ADCSRA |= SET_BIT(ADIE);    
     ADCSRA |= SET_BIT(ADSC); 
-}
-
-void TIMER1_OVF_vect(void)
-{
-    TIFR1 |= SET_BIT(TOV1); 
-    stopMotor();
-    programState = RESTART;
 }
 
 uint16_t getThirtyDegreeTime(void)

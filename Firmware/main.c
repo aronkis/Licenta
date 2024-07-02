@@ -4,30 +4,10 @@
 
 int main(void)
 {
-    uartInit(19200);
-    initPorts();
-    initTimers();
-    generateTables();
-    initADC();
-    GREEN_LED;
+    setup();
+
     while(TRUE)
     { 
-        switch (programState)
-        {
-            case STARTUP:
-                startMotor();
-            break;
-            case RUNNING:
-                electricalSpeed = getElectricalSpeed();
-                debugPrint(electricalSpeed, "espd=");
-                debugPrint(OCR0B, "pwm=");
-                checkForMotorStop();
-            break;
-            case RESTART: 
-                stopMotor();
-                checkForStartMotor();
-            break;
-        }
+        runMotor();
     }
-    RED_LED;
 }

@@ -1,7 +1,6 @@
 #include "../include/serial.h"
 #include "../include/functions.h"
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #include <util/delay.h>
 
 volatile uint8_t nextStep = 0;
@@ -15,13 +14,13 @@ uint8_t debugMode = 0;
 void initPorts(void)
 {
 	DRIVE_REG = SET_BIT(AL) | SET_BIT(BL) | SET_BIT(CL) |
-				      SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
+				SET_BIT(AH) | SET_BIT(BH) | SET_BIT(CH);
 	CLEAR_REGISTER(DRIVE_PORT);
 
 	DDRD = SET_BIT(PWM_PIN) | SET_BIT(LED_PIN);
 
 	DIDR0 = SET_BIT(ADC0D) | SET_BIT(ADC1D) | SET_BIT(ADC2D) |
-			    SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D);
+			SET_BIT(ADC3D) | SET_BIT(ADC4D) | SET_BIT(ADC5D);
 }
 
 void initTimers(void)
@@ -73,7 +72,7 @@ void initADC(void)
 		while (speedReference < PWM_START_VALUE)
 		{
 			ADCSRA |= SET_BIT(ADSC); 
-			while (!(ADCSRA & SET_BIT(ADIF))) {} // Wait for conversion to complete
+			while (!(ADCSRA & SET_BIT(ADIF))) {}
 			speedReference = ADCH;
 		}
 	}
@@ -127,7 +126,7 @@ void startMotor()
 
 	ADCSRB  = 0; 
 	ADCSRA  = SET_BIT(ADEN) | SET_BIT(ADIE) | SET_BIT(ADIF) | ADC_PRESCALER_8;
-	ADCSRA |= SET_BIT(ADSC); // Start a manual converion
+	ADCSRA |= SET_BIT(ADSC);
 
   	motorStartupDelay = 2510;
 	while (motorStartupDelay != 100)
@@ -152,8 +151,6 @@ void startMotor()
 			startupCommutationCounter = 0;
 		}
 	}
-
-	// TIMSK1 |= SET_BIT(TOIE1); // To activate stall detection
 }
 
 void stopMotor(void)
@@ -165,8 +162,9 @@ void stopMotor(void)
 	motorStopCounter = 0;
 	CLEAR_REGISTER(ADCSRA);
 	CLEAR_REGISTER(ADMUX);
+	DRIVE_PORT = AL | BL | CL;
+	_delay_ms(10);
 	CLEAR_REGISTER(DRIVE_PORT);
-	_delay_ms(50);
 }
 
 void checkForMotorStop(void)
@@ -225,7 +223,38 @@ uint16_t getElectricalSpeed(void)
 	{
 		temp += (thirtyDegreeTime * 2); 
 	}
-	return temp;
+	return temp / NUMBER_OF_STEPS;
+}
+
+void setup(void)
+{
+	RED_LED;
+	uartInit(19200);
+    initPorts();
+    initTimers();
+    generateTables();
+    initADC();
+	GREEN_LED;
+}
+
+void runMotor(void)
+{
+	switch (programState)
+	{
+		case STARTUP:
+			startMotor();
+		break;
+		case RUNNING:
+			electricalSpeed = getElectricalSpeed();
+			debugPrint(electricalSpeed, "espd=");
+			debugPrint(OCR0B, "pwm=");
+			checkForMotorStop();
+		break;
+		case RESTART: 
+			stopMotor();
+			checkForStartMotor();
+		break;
+	}
 }
 
 void generateTables(void)
@@ -238,6 +267,7 @@ void generateTables(void)
 	driveTable[4] = CH_AL;
 	driveTable[5] = CH_BL;
 
+	// BEMF measurement sequence
 	ADMUXTable[0] = ADMUX_COIL_C;
 	ADMUXTable[1] = ADMUX_COIL_B;
 	ADMUXTable[2] = ADMUX_COIL_A;
@@ -245,6 +275,7 @@ void generateTables(void)
 	ADMUXTable[4] = ADMUX_COIL_B;
 	ADMUXTable[5] = ADMUX_COIL_A;
 
+	// Current measurement sequence
 	currentTable[0] = ADMUX_CURR_A;
 	currentTable[1] = ADMUX_CURR_A;
 	currentTable[2] = ADMUX_CURR_B;

@@ -15,10 +15,6 @@ void __attribute__((__signal__))
      __attribute__((__used__))
 TIMER1_COMPA_vect(void);  // Commutate
 
-void __attribute__((__signal__))
-     __attribute__((__used__))
-TIMER1_OVF_vect(void);  // Stall detection
-
 uint16_t getThirtyDegreeTime(void);
 
 #endif //_INTERRUPTS_H_

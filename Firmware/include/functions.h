@@ -2,7 +2,6 @@
 #define _FUNCTIONS_H_
 
 #include <stdint.h>
-#include <avr/io.h>
 
 #define FALSE 0
 #define TRUE  (!FALSE)
@@ -15,12 +14,16 @@
 #define PWM_MAX_VALUE   (PWM_TOP_VALUE - 1)
 #define DELAY_MULTIPLIER 10
 
+// Digital output pins
 #define AH PB0
 #define AL PB1
 #define BH PB2
 #define BL PB3
 #define CH PB4
 #define CL PB5
+
+#define DRIVE_REG DDRB
+#define DRIVE_PORT PORTB
 
 #define PWM_PIN PD5
 #define LED_PIN PD4
@@ -62,37 +65,34 @@
 #define SHUNT_RESISTANCE 20 // [mOhm]
 #define CURRENT_LIMIT 10000 // [mA]
 
+// BEMF signal options
 #define RISING 1
 #define FALLING 0
 
-#define DRIVE_PORT PORTB
-#define DRIVE_REG  DDRB
-
 #define START_UP_COMMS 6
 #define NUMBER_OF_STEPS 6
-#define STARTUP_DELAY 15000
+#define STARTUP_DELAY 12000
 
 #define SET_BIT(bitPos) (1 << bitPos)
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
 #define CLEAR_REGISTER(reg) (reg &= ~reg)
 #define CLEAR_INTERRUPT_FLAGS(reg) (reg = reg)
-#define GREEN_LED (PORTD &= CLEAR_BIT(PD4))
 #define RED_LED (PORTD |= SET_BIT(PD4))
+#define GREEN_LED (PORTD &= CLEAR_BIT(PD4))
 
 enum ADC_STATE
 {
-     ADC_BEMF_READ,
+     ADC_BEMF_READ = 0,
      ADC_SPEED_REFERENCE_READ
 };
 
 enum PROGRAM_STATE
 {
-    STARTUP,
+    STARTUP = 0,
     RUNNING,
     RESTART
 };
 
-volatile enum ADC_STATE commutationState;
 volatile uint8_t nextStep;
 volatile uint8_t nextPhase;
 volatile uint8_t zeroCrossPolarity;
@@ -104,6 +104,7 @@ volatile uint8_t motorStarted;
 volatile uint16_t thirtyDegreeTime;
 volatile uint16_t motorStartupDelay;
 volatile uint16_t motorStopCounter;
+volatile enum ADC_STATE commutationState;
 enum PROGRAM_STATE programState;
 uint8_t debugMode;
 uint16_t electricalSpeed;
@@ -116,14 +117,14 @@ uint16_t startupDelays[START_UP_COMMS];
 void initPorts(void);
 void initTimers(void);
 void initADC(void);
-void initComparator(void);
-void enableWatchdogTimer(void);
 void generateTables(void);
 void startMotor(void);
 void stopMotor(void);
 void checkForMotorStop(void);
 void checkForStartMotor(void);
 void startupDelay(uint64_t time);
+void setup(void);
+void runMotor(void);
 uint8_t checkForZeroCrossPolarity(void);
 uint16_t getElectricalSpeed(void);
 

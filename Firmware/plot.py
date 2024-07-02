@@ -16,8 +16,9 @@ PWMYAxis = []
 PWMYAxisLimits = [i for i in range(0, 120, 10)]
 
 startTime = -1
-count1, count2 = 0, 0 # used for oversampling 
+speedSampleCounter, pwmSampleCounter = 0, 0 # used for oversampling 
 pwmAverage, speedAverage = 0, 0
+RPMConstant = 0x15CC5B # used to convert the 180 degree electical rotation time to RPM
 
 serialPort = 'COM23'
 baudRate = 19200
@@ -29,39 +30,40 @@ def getArgumentValue(argument):
 # This function is called periodically from FuncAnimation
 def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLimit):
 
-    global startTime, count1, count2, speedAverage, pwmAverage
+    global startTime, speedSampleCounter, pwmSampleCounter, speedAverage, pwmAverage
     
     while ser.inWaiting():
         try:
             line = ser.readline().decode("ascii")
             if '\x00' in line:
                 line = ' '.join(line.split('\x00'))
-        except:
-            pass
+        except ValueError as e:
+            print(e)
         try:
-            if ("spd" in line):
+            if ("espd" in line):
                 if (startTime == -1):
                     startTime = perf_counter()
                 # Add x and y to the rotation speed list
                 speedAverage += int(getArgumentValue(line))
-                count1 += 1
-                if (count1 == 10):
+                speedSampleCounter += 1
+                if (speedSampleCounter == 10):
                     SpeedXAxis.append(round((perf_counter() - startTime), 2))
-                    SpeedYAxis.append(speedAverage // count1)
-                    count1 = 0
+                    SpeedYAxis.append(RPMConstant // (speedAverage // speedSampleCounter))
+                    speedSampleCounter = 0
                     speedAverage = 0
                 
             if ("pwm" in line):
                 # Add x and y to the PWM list
                 pwmAverage += (float(getArgumentValue(line)) * 0.5)
-                count2 += 1
-                if (count2 == 10):
+                pwmSampleCounter += 1
+                if (pwmSampleCounter == 10):
                     PWMXAxis.append(round((perf_counter() - startTime), 2))
-                    PWMYAxis.append(pwmAverage / count2)
-                    count2 = 0
+                    PWMYAxis.append(pwmAverage / pwmSampleCounter)
+                    pwmSampleCounter = 0
                     pwmAverage = 0
-        except:
-            pass
+        except ValueError as e:
+            print(e)
+            
     # Limit x and y lists to 20 items
     SpeedXAxis = SpeedXAxis[-plotLimit:]
     SpeedYAxis = SpeedYAxis[-plotLimit:]
@@ -74,20 +76,21 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
     ax1.plot(SpeedXAxis, SpeedYAxis)
     ax2.plot(PWMXAxis, PWMYAxis)
     
-    # Formatting the plots
+    # Formatting the speed graph
     ax1.set_ylim([0, 12000])
     ax1.set_yticks(SpeedYAxisLimits)
     ax1.set_ylabel('Rotational Speed [RPM]')
     ax1.set_xlabel('Time [s]')
-    ax1.set_xticklabels(SpeedXAxis, rotation=45, ha='right')
+    ax1.set_xticklabels(SpeedXAxis, rotation = 45, ha = 'right')
     
+    # Formatting the PWM graph
     ax2.set_ylim([0, 120])
     ax2.set_yticks(PWMYAxisLimits)
     ax2.set_ylabel('Duty Cycle [%]')
     ax2.set_xlabel('Time [s]')
-    ax2.set_xticklabels(SpeedXAxis, rotation=45, ha='right')
+    ax2.set_xticklabels(SpeedXAxis, rotation = 45, ha = 'right')
 
-    plt.suptitle('Motor Stats', size='xx-large')
+    plt.suptitle('Motor Speed vs PWM', size = 'xx-large')
 
 def main():
     if (len(sys.argv) > 1):
