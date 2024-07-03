@@ -23,6 +23,7 @@ RPMConstant = 0x15CC5B # used to convert the 180 degree electical rotation time 
 serialPort = 'COM23'
 baudRate = 19200
 plotLimit = 50
+numberOfSamples = 10
 
 def getArgumentValue(argument):
     return argument[argument.find("=") + 1:]
@@ -46,7 +47,7 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
                 # Add x and y to the rotation speed list
                 speedAverage += int(getArgumentValue(line))
                 speedSampleCounter += 1
-                if (speedSampleCounter == 10):
+                if (speedSampleCounter == numberOfSamples):
                     SpeedXAxis.append(round((perf_counter() - startTime), 2))
                     SpeedYAxis.append(RPMConstant // (speedAverage // speedSampleCounter))
                     speedSampleCounter = 0
@@ -56,7 +57,7 @@ def animate(i, ser, ax1, ax2, SpeedXAxis, PWMXAxis, SpeedYAxis, PWMYAxis, plotLi
                 # Add x and y to the PWM list
                 pwmAverage += (float(getArgumentValue(line)) * 0.5)
                 pwmSampleCounter += 1
-                if (pwmSampleCounter == 10):
+                if (pwmSampleCounter == numberOfSamples):
                     PWMXAxis.append(round((perf_counter() - startTime), 2))
                     PWMYAxis.append(pwmAverage / pwmSampleCounter)
                     pwmSampleCounter = 0
@@ -101,6 +102,8 @@ def main():
                 serialPort = getArgumentValue(arg)
             if ("baudRate" in arg):
                 baudRate = int(getArgumentValue(arg))
+            if ("numberOfSamples" in arg):
+                numberOfSamples = int(getArgumentValue(arg))
 
     # Connecting to the given Serial Port
     ser = serial.Serial(

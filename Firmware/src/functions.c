@@ -30,7 +30,7 @@ void initTimers(void)
 	TCCR0B |= SET_BIT(WGM02) | SET_BIT(CS00); // no prescaling
 	OCR0A = PWM_TOP_VALUE;
 	CLEAR_INTERRUPT_FLAGS(TIFR0);
-	TIMSK0 |= SET_BIT(TOIE0); //enable for speed reference sampling
+	TIMSK0 |= SET_BIT(TOIE0);
 
 	// Timer1 for commutation timing
 	TCCR1B = SET_BIT(CS11); // Prescaler 8, 1 MHz
