@@ -71,7 +71,7 @@
 
 #define START_UP_COMMS 6
 #define NUMBER_OF_STEPS 6
-#define STARTUP_DELAY 12000
+#define STARTUP_DELAY 15000
 
 #define SET_BIT(bitPos) (1 << bitPos)
 #define CLEAR_BIT(bitPos) (~(1 << bitPos))
